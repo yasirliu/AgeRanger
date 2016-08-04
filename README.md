@@ -1,7 +1,7 @@
 AgeRanger is a world leading application designed to identify person's age group!
-The only problem with it is... It is not implemented.
+The only problem with it is... It is not implemented - except a SQLite DB called AgeRanger.db.
 
-To help AgeRanger to conquer the world please implement a web application that does the following:
+To help AgeRanger to conquer the world please implement a web application that communicates with the DB mentioned above, and does the following:
 
  - Allows user to add a new person - every person has the first name, last name, and age;
  - Displays a list of people in the DB with their First and Last names, age and their age group. The age group should be determened based on the AgeGroup DB table - a person belongs to the age group where person's age >= 
