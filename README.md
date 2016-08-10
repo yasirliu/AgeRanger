@@ -13,6 +13,8 @@ And unit tests! We love unit tests!
 
 Last, but not the least - our sales manager suggests you'll get bonus points if the application will also allow user to edit existing person records and expose a WEB API.
 
+Please fork the project.
+
 You are free to use any technology and frameworks you need. However if you decide to go with third party package manager or dev tool - don't forget to mention them in the README.md of your fork.
 
 Good luck!
