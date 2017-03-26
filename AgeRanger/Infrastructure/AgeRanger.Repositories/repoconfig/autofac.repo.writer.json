@@ -1,0 +1,40 @@
+﻿{
+  "components": [
+    {
+      //Register dbcontext write side
+      "type": "AgeRanger.SQLite.AgeRangerWriterDbContext, AgeRanger.SQLite",
+      "services": [
+        {
+          "type": "AgeRanger.DataContracts.DataBase.IAgeRangerWriterDbContextContract, AgeRanger.DataContracts"
+        }
+      ],
+      "autoActivate": true,
+      "instanceScope": "perdependency",
+      "ownership": "lifetimescope"
+    },
+    {
+      //Register person writer repository
+      "type": "AgeRanger.Repositories.Writers.PersonWriterRepository, AgeRanger.Repositories",
+      "services": [
+        {
+          "type": "AgeRanger.DataContracts.Repositories.IPersonWriterRepositoryContract, AgeRanger.DataContracts"
+        }
+      ],
+      "autoActivate": true,
+      "instanceScope": "perdependency",
+      "ownership": "lifetimescope"
+    },
+    {
+      //Register agegroup writer repository
+      "type": "AgeRanger.Repositories.Writers.AgeGroupWriterRepository, AgeRanger.Repositories",
+      "services": [
+        {
+          "type": "AgeRanger.DataContracts.Repositories.IAgeGroupWriterRepositoryContract, AgeRanger.DataContracts"
+        }
+      ],
+      "autoActivate": true,
+      "instanceScope": "perdependency",
+      "ownership": "lifetimescope"
+    }
+  ]
+}

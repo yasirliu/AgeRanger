@@ -1,0 +1,40 @@
+﻿{
+  "components": [
+    {
+      //Register dbcontext read side
+      "type": "AgeRanger.SQLite.AgeRangerDbContext, AgeRanger.SQLite",
+      "services": [
+        {
+          "type": "AgeRanger.DataContracts.DataBase.IAgeRangerReaderDbContextContract, AgeRanger.DataContracts"
+        }
+      ],
+      "autoActivate": true,
+      "instanceScope": "perdependency",
+      "ownership": "lifetimescope"
+    },
+    {
+      //Register person reader repository
+      "type": "AgeRanger.Repositories.Readers.PersonReaderRepository, AgeRanger.Repositories",
+      "services": [
+        {
+          "type": "AgeRanger.DataContracts.Repositories.IPersonReaderRepositoryContract, AgeRanger.DataContracts"
+        }
+      ],
+      "autoActivate": true,
+      "instanceScope": "perdependency",
+      "ownership": "lifetimescope"
+    },
+    {
+      //Register agegroup reader repository
+      "type": "AgeRanger.Repositories.Readers.AgeGroupReaderRepository, AgeRanger.Repositories",
+      "services": [
+        {
+          "type": "AgeRanger.DataContracts.Repositories.IAgeGroupReaderRepositoryContract, AgeRanger.DataContracts"
+        }
+      ],
+      "autoActivate": true,
+      "instanceScope": "perdependency",
+      "ownership": "lifetimescope"
+    }
+  ]
+}
