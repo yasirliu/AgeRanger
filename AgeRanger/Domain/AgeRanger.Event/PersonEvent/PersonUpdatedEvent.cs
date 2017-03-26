@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AgeRanger.Domain.ServiceBus.EventHandler;
+using AgeRanger.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +17,10 @@ namespace AgeRanger.Event.PersonEvent
         public string LastName { get; set; }
 
         public int Age { get; set; }
+
+        public override Operator Operator
+        {
+            get;
+        } = Operator.Update;
     }
 }

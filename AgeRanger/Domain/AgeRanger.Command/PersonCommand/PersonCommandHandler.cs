@@ -10,6 +10,7 @@ using AutoMapper;
 using AgeRanger.Command.Contracts;
 using Autofac.Extras.DynamicProxy;
 using AgeRanger.Command.CommandValidaters;
+using AgeRanger.Domain.ServiceBus.CommandHandler;
 
 namespace AgeRanger.Command.PersonCommand
 {
@@ -53,7 +54,7 @@ namespace AgeRanger.Command.PersonCommand
             await _repository.CommitAsync();
         }
 
-        internal override Person CommandMapper<TCommand>(TCommand command)
+        protected override Person CommandMapper<TCommand>(TCommand command)
         {
             Mapper.Initialize(cfg => cfg.CreateMap<TCommand, Person>()
                 .ForMember(person => person.RowVersion, opt => opt.MapFrom(src => src.CommandVersion)));

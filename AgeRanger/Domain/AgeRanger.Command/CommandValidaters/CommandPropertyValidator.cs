@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AgeRanger.Event.PersonEvent;
 using AgeRanger.Command.Contracts;
 using AgeRanger.Command.PersonCommand;
+using AgeRanger.Domain.ServiceBus.Interfaces;
 
 namespace AgeRanger.Command.CommandValidaters
 {
@@ -15,7 +16,7 @@ namespace AgeRanger.Command.CommandValidaters
     {
         public void Intercept(IInvocation invocation)
         {
-            if (invocation.Method.Name == "Handle" || invocation.Method.Name== "HandleAsync")
+            if (typeof(ICommandHandler<ICommand>).GetMethods().Select(m => m.Name).Contains(invocation.Method.Name))
             {
                 //Check the result of Validate method
                 var validation = invocation.Arguments[0] as IValidatableObject;

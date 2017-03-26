@@ -17,11 +17,15 @@ namespace AgeRanger.DIManager
     {
         private ConfigurationBuilder _config;
         private ContainerBuilder _builder;
+        private string[] _configFiles;
 
-        public AutofacProvider()
+        private IContainer _container;
+
+        public AutofacProvider(params string[] configFiles)
         {
             _config = new ConfigurationBuilder();
             _builder = new ContainerBuilder();
+            _configFiles = configFiles;
         }
 
         /// <summary>
@@ -38,22 +42,63 @@ namespace AgeRanger.DIManager
                 var module = new ConfigurationModule(_config.Build());
                 _builder.RegisterModule(module);
             }
+
+            //Interceptor only can be configured by code
+            //PersonCommandHandler dependents object that registered in config file
+            _builder.RegisterType<PersonCommandHandler>()
+                .As<IPersonCommandHandler>()
+                .EnableInterfaceInterceptors();
         }
 
         public virtual void ConfigureInterceptor()
         {
-            //Interceptor only can be configured by code
-            _builder.RegisterType<PersonCommandHandler>()
-                .As<IPersonCommandHandler>()
-                .EnableInterfaceInterceptors();
             _builder.Register(c => new CommandPropertyValidator());
         }
 
-        public IContainer Build(params string[] configFiles)
+        public void Build()
+        {
+            if (this._container == null)
+            {
+                _build(_configFiles);
+                _container = _builder.Build();
+            }
+        }
+
+        private void _build(params string[] configFiles)
         {
             ConfigureDI(configFiles);
             ConfigureInterceptor();
-            return _builder.Build();
         }
+
+        public IContainer GetContainer()
+        {
+            if (_container == null)
+            {
+                throw new NullReferenceException("IoC container doesn't exit in context, execute Build() before GetContainer()");
+            }
+            return _container;
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._container.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
+        #endregion
     }
 }

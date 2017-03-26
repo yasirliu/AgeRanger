@@ -84,13 +84,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlerBase.cs" />
     <Compile Include="CommandValidaters\CommandPropertyValidator.cs" />
-    <Compile Include="CommnadBase.cs" />
     <Compile Include="Contracts\ICommandPropertyValidator.cs" />
     <Compile Include="Contracts\IPersonCommandHandler.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandHandler.cs" />
     <Compile Include="PersonCommand\CreateNewPersonCommand.cs" />
     <Compile Include="PersonCommand\ModifyExistingPersonCommand.cs" />
     <Compile Include="PersonCommand\PersonCommandHandler.cs" />
@@ -100,6 +96,10 @@
     <ProjectReference Include="..\..\Infrastructure\AgeRanger.DataContracts\AgeRanger.DataContracts.csproj">
       <Project>{566aff1d-243b-493b-9d34-55cc601640f8}</Project>
       <Name>AgeRanger.DataContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AgeRanger.Domain.ServiceBus\AgeRanger.Domain.ServiceBus.csproj">
+      <Project>{E6B09EB5-D6EC-4E00-B2FC-7A46210ABB7E}</Project>
+      <Name>AgeRanger.Domain.ServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\AgeRanger.Domain\AgeRanger.Domain.csproj">
       <Project>{c49f5fc3-cd5f-4be5-8359-b075a6a1e050}</Project>

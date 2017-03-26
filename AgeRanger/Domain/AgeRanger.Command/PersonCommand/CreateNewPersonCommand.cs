@@ -1,4 +1,6 @@
 ﻿using AgeRanger.Command.CommandValidaters;
+using AgeRanger.Domain.ServiceBus;
+using AgeRanger.Domain.ServiceBus.CommandHandler;
 using Autofac.Extras.DynamicProxy;
 using System;
 using System.Collections.Generic;
@@ -6,10 +8,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AgeRanger.Domain.ValueObjects;
 
 namespace AgeRanger.Command.PersonCommand
 {
-    public sealed class CreateNewPersonCommand : CommnadBase, IValidatableObject
+    public sealed class CreateNewPersonCommand : CommnadAggregate, IValidatableObject
     {
         [Required]
         public string FirstName { get; set; }
@@ -20,6 +23,11 @@ namespace AgeRanger.Command.PersonCommand
         [Required]
         [Range(0, int.MaxValue)]
         public int Age { get; set; }
+
+        public override Operator Operator
+        {
+            get;
+        } = Operator.Add;
 
         /// <summary>
         /// Validate properties only

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{692DD621-FCC5-4E69-B29F-1145E21E967A}</ProjectGuid>
+    <ProjectGuid>{E6B09EB5-D6EC-4E00-B2FC-7A46210ABB7E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AgeRanger.Event</RootNamespace>
-    <AssemblyName>AgeRanger.Event</AssemblyName>
+    <RootNamespace>AgeRanger.Domain.ServiceBus</RootNamespace>
+    <AssemblyName>AgeRanger.Domain.ServiceBus</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,21 +44,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PersonEvent\PersonCreatedEvent.cs" />
-    <Compile Include="PersonEvent\PersonNotCreatedEvent.cs" />
-    <Compile Include="PersonEvent\PersonNotUpdatedEvent.cs" />
-    <Compile Include="PersonEvent\PersonUpdatedEvent.cs" />
+    <Compile Include="CommandHandler\CommandHandlerBase.cs" />
+    <Compile Include="CommandHandler\CommnadAggregate.cs" />
+    <Compile Include="EventHandler\ExceptionEvent.cs" />
+    <Compile Include="EventHandler\VersionedEvent.cs" />
+    <Compile Include="Interfaces\ICommand.cs" />
+    <Compile Include="Interfaces\ICommandHandler.cs" />
+    <Compile Include="Interfaces\IEvent.cs" />
+    <Compile Include="Interfaces\IOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AgeRanger.Domain.ServiceBus\AgeRanger.Domain.ServiceBus.csproj">
-      <Project>{e6b09eb5-d6ec-4e00-b2fc-7a46210abb7e}</Project>
-      <Name>AgeRanger.Domain.ServiceBus</Name>
+    <ProjectReference Include="..\..\Infrastructure\AgeRanger.DataContracts\AgeRanger.DataContracts.csproj">
+      <Project>{566aff1d-243b-493b-9d34-55cc601640f8}</Project>
+      <Name>AgeRanger.DataContracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\AgeRanger.Domain\AgeRanger.Domain.csproj">
-      <Project>{C49F5FC3-CD5F-4BE5-8359-B075A6A1E050}</Project>
+      <Project>{c49f5fc3-cd5f-4be5-8359-b075a6a1e050}</Project>
       <Name>AgeRanger.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

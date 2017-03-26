@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AgeRanger.Command
+namespace AgeRanger.Domain.ServiceBus.CommandHandler
 {
     public abstract class CommandHandlerBase<TEntity> : IDisposable
     {
-        internal IEntityWriterContract<TEntity> _repository;
+        protected IEntityWriterContract<TEntity> _repository;
         public CommandHandlerBase(IEntityWriterContract<TEntity> repository)
         {
             if (ReferenceEquals(null, repository))
@@ -25,7 +25,7 @@ namespace AgeRanger.Command
         /// </summary>
         /// <typeparam name="TCommand"></typeparam>
         /// <param name="command"></param>
-        internal abstract TEntity CommandMapper<TCommand>(TCommand command) where TCommand : CommnadBase;
+        protected abstract TEntity CommandMapper<TCommand>(TCommand command) where TCommand : CommnadAggregate;
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

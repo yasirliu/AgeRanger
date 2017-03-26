@@ -19,17 +19,16 @@ namespace AgeRanger.Command.UnitTest
     {
 
         private IDIProvider<IContainer> iocProvider;
-        private IContainer container;
         private IPersonCommandHandler handler;
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            iocProvider = new AutofacProvider();
-            container = iocProvider
-                .Build($@"{ AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.reader.json",
+            iocProvider = new AutofacProvider($@"{ AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.reader.json",
                             $@"{AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.writer.json");
-            handler = container.Resolve<IPersonCommandHandler>();
+            iocProvider
+                .Build();
+            handler = iocProvider.GetContainer().Resolve<IPersonCommandHandler>();
         }
 
         [Test]
@@ -70,8 +69,8 @@ namespace AgeRanger.Command.UnitTest
         [OneTimeTearDown]
         public void TearDown()
         {
-            container.Dispose();
-            container = null;
+            iocProvider.Dispose();
+            iocProvider = null;
         }
     }
 }

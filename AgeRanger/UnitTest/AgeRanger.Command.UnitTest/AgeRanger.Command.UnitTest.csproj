@@ -139,6 +139,10 @@
       <Project>{c9e4a798-1004-46c2-9380-3cbf974bafc2}</Project>
       <Name>AgeRanger.Command</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Domain\AgeRanger.Domain.ServiceBus\AgeRanger.Domain.ServiceBus.csproj">
+      <Project>{e6b09eb5-d6ec-4e00-b2fc-7a46210abb7e}</Project>
+      <Name>AgeRanger.Domain.ServiceBus</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Domain\AgeRanger.Domain\AgeRanger.Domain.csproj">
       <Project>{c49f5fc3-cd5f-4be5-8359-b075a6a1e050}</Project>
       <Name>AgeRanger.Domain</Name>

@@ -1,5 +1,6 @@
 ﻿using AgeRanger.Command.CommandValidaters;
 using AgeRanger.Command.PersonCommand;
+using AgeRanger.Domain.ServiceBus.Interfaces;
 using Autofac.Extras.DynamicProxy;
 using System;
 using System.Collections.Generic;

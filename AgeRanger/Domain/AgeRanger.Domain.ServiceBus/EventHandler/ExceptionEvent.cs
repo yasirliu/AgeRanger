@@ -1,23 +1,21 @@
-﻿using System;
+﻿using AgeRanger.Domain.ServiceBus.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AgeRanger.Event
+namespace AgeRanger.Domain.ServiceBus.EventHandler
 {
-    public class ExceptionEvent : Exception, IEvent
+    public abstract class ExceptionEvent : Exception, IEvent
     {
         public ExceptionEvent(string errorMessage) : base(errorMessage)
         { }
 
-        public string EventId
+        public Guid EventId
         {
-            get
-            {
-                return $"{this.GetType().Name}-{DateTime.Now.Ticks}";
-            }
-        }
+            get;
+        } = Guid.NewGuid();
 
         /// <summary>
         /// Error code would be used in web app

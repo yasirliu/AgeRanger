@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AgeRanger.Command
+namespace AgeRanger.Domain.ServiceBus.Interfaces
 {
     public interface ICommand
     {
@@ -12,6 +12,6 @@ namespace AgeRanger.Command
         /// <summary>
         /// Command Id
         /// </summary>
-        string CommandId { get; }
+        Guid CommandId { get; }
     }
 }

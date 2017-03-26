@@ -1,13 +1,15 @@
-﻿using System;
+﻿using AgeRanger.Domain.ServiceBus.CommandHandler;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AgeRanger.Domain.ValueObjects;
 
 namespace AgeRanger.Command.PersonCommand
 {
-    public sealed class ModifyExistingPersonCommand : CommnadBase, IValidatableObject
+    public sealed class ModifyExistingPersonCommand : CommnadAggregate, IValidatableObject
     {
         [Required]
         [Range(1, int.MaxValue)]
@@ -22,6 +24,11 @@ namespace AgeRanger.Command.PersonCommand
         [Required]
         [Range(0,int.MaxValue)]
         public int Age { get; set; }
+
+        public override Operator Operator
+        {
+            get;
+        } = Operator.Update;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

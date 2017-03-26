@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.DIManager
 {
-    public interface IDIProvider<out TConfiguration>
+    /// <summary>
+    /// IoC provider interface
+    /// </summary>
+    /// <typeparam name="TContainer">the type of IoC container</typeparam>
+    public interface IDIProvider<out TContainer> : IDisposable
     {
-        TConfiguration Build(params string[] configFiles);
+        void Build();
+        TContainer GetContainer();
     }
 }
