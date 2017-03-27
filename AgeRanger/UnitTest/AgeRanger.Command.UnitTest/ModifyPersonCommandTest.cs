@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,10 +56,14 @@ namespace AgeRanger.Command.UnitTest
         }
 
         [Test]
-        public async Task Update_Person_Valid_Entity()
+        public void Update_Person_Valid_Entity()
         {
-            var person = new ModifyExistingPersonCommand() { Id=1, FirstName = "Adam111111", LastName = "Liu11111", Age = 1000 };
-            await handler.HandleAsync(person);
+            ThrowsAsync<DbUpdateConcurrencyException>(async delegate
+            {
+                var person = new ModifyExistingPersonCommand() { Id = 1, FirstName = "Adam111111", LastName = "Liu11111", Age = 1000 };
+                await handler.HandleAsync(person);
+            });
+            
         }
 
         [Test]

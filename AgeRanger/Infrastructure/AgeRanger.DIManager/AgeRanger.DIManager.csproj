@@ -112,6 +112,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\AgeRanger.Application\AgeRanger.Application.csproj">
+      <Project>{e37c0d11-c30f-447f-a350-43d5520529d5}</Project>
+      <Name>AgeRanger.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Domain\AgeRanger.Command\AgeRanger.Command.csproj">
       <Project>{c9e4a798-1004-46c2-9380-3cbf974bafc2}</Project>
       <Name>AgeRanger.Command</Name>

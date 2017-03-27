@@ -1,5 +1,6 @@
 ﻿using AgeRanger.Command.Contracts;
 using AgeRanger.Command.PersonCommand;
+using AgeRanger.DataContracts.Repositories;
 using AgeRanger.DIManager;
 using AgeRanger.Event.PersonEvent;
 using Autofac;
@@ -64,6 +65,12 @@ namespace AgeRanger.Command.UnitTest
                 var person = new CreateNewPersonCommand() { Age = 100 };
                 await handler.HandleAsync(person);
             });
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>().Delete(null);
         }
 
         [OneTimeTearDown]

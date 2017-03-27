@@ -13,7 +13,7 @@ namespace AgeRanger.WebAPI.Controllers
     {
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<string> GetUsers()
+        public IEnumerable<string> GetPersons()
         {
             return new string[] { "value1", "value2" };
         }

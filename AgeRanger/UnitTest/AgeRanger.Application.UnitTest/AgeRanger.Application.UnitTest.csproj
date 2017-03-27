@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{175F074A-FDBD-4868-9BF7-0D2814FD90C3}</ProjectGuid>
+    <ProjectGuid>{237CF820-104D-4AEF-A08C-ABEC6B252702}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AgeRanger.Repositories.UnitTest</RootNamespace>
-    <AssemblyName>AgeRanger.Repositories.UnitTest</AssemblyName>
+    <RootNamespace>AgeRanger.Application.UnitTest</RootNamespace>
+    <AssemblyName>AgeRanger.Application.UnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -40,8 +40,12 @@
       <HintPath>..\..\packages\Autofac.Configuration.4.0.1\lib\net45\Autofac.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="Autofac.Extras.AggregateService, Version=4.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Extras.AggregateService.4.1.0\lib\net45\Autofac.Extras.AggregateService.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -50,18 +54,6 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.Toolkit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Toolkit.1.0.3\lib\net45\EntityFramework.Toolkit.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.Toolkit.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Toolkit.Core.1.0.3\lib\net45\EntityFramework.Toolkit.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=3.6.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CompareNETObjects.3.06.0.0\lib\net452\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -104,14 +96,6 @@
       <HintPath>..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Repository, Version=1.0.7.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Repository.1.0.7.8\lib\net45\Repository.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Repository.EntityFramework, Version=1.0.7.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Repository.EntityFramework.1.0.7.1\lib\net45\Repository.EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="SQLite.CodeFirst, Version=1.3.0.17, Culture=neutral, PublicKeyToken=eb96ba0a78d831a7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLite.CodeFirst.1.3.0.17\lib\net45\SQLite.CodeFirst.dll</HintPath>
       <Private>True</Private>
@@ -120,7 +104,6 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.SQLite, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Data.SQLite.Core.1.0.104.0\lib\net451\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
@@ -134,6 +117,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.3.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -151,21 +138,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PersonCommandTest.cs" />
+    <Compile Include="PersonQueryServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLiteRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\AgeRanger.Application\AgeRanger.Application.csproj">
+      <Project>{E37C0D11-C30F-447F-A350-43D5520529D5}</Project>
+      <Name>AgeRanger.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Application\AgeRanger.Dtos\AgeRanger.Dtos.csproj">
+      <Project>{1a590cf7-929e-442e-ae66-902c30cf1365}</Project>
+      <Name>AgeRanger.Dtos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Domain\AgeRanger.Command\AgeRanger.Command.csproj">
       <Project>{C9E4A798-1004-46C2-9380-3CBF974BAFC2}</Project>
       <Name>AgeRanger.Command</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Domain\AgeRanger.Domain.ServiceBus\AgeRanger.Domain.ServiceBus.csproj">
+      <Project>{e6b09eb5-d6ec-4e00-b2fc-7a46210abb7e}</Project>
+      <Name>AgeRanger.Domain.ServiceBus</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Domain\AgeRanger.Domain\AgeRanger.Domain.csproj">
       <Project>{c49f5fc3-cd5f-4be5-8359-b075a6a1e050}</Project>
       <Name>AgeRanger.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Domain\AgeRanger.Event\AgeRanger.Event.csproj">
+      <Project>{692dd621-fcc5-4e69-b29f-1145e21e967a}</Project>
+      <Name>AgeRanger.Event</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\AgeRanger.DataContracts\AgeRanger.DataContracts.csproj">
       <Project>{566aff1d-243b-493b-9d34-55cc601640f8}</Project>
@@ -176,7 +180,7 @@
       <Name>AgeRanger.DataSeeds</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\AgeRanger.DIManager\AgeRanger.DIManager.csproj">
-      <Project>{940fc873-e355-41c0-a59b-4c827893fb74}</Project>
+      <Project>{940FC873-E355-41C0-A59B-4C827893FB74}</Project>
       <Name>AgeRanger.DIManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\AgeRanger.ModelConfiguration\AgeRanger.ModelConfiguration.csproj">

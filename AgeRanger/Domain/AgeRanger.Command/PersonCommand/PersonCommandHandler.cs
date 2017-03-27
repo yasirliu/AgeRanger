@@ -26,18 +26,14 @@ namespace AgeRanger.Command.PersonCommand
         {
         }
 
-        public virtual void Handle(ModifyExistingPersonCommand command)
+        public virtual async void Handle(ModifyExistingPersonCommand command)
         {
-            var person = this.CommandMapper<ModifyExistingPersonCommand>(command);
-            _repository.Update(person, person.RowVersion);
-            _repository.Commit();
+            await HandleAsync(command);
         }
 
-        public virtual void Handle(CreateNewPersonCommand command)
+        public virtual async void Handle(CreateNewPersonCommand command)
         {
-            var person = this.CommandMapper<CreateNewPersonCommand>(command);
-            _repository.Create(person);
-            _repository.Commit();
+            await HandleAsync(command);
         }
 
         public virtual async Task HandleAsync(ModifyExistingPersonCommand command)

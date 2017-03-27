@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.Domain.ServiceBus.Interfaces
 {
-    public interface ICommandHandler<in TCommand> where TCommand : ICommand
+    public interface ICommandHandler<in TCommand> : IDisposable where TCommand : ICommand
     {
         void Handle(TCommand command);
         Task HandleAsync(TCommand command);

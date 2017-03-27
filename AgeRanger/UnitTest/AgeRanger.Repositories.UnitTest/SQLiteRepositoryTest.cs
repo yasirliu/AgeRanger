@@ -15,6 +15,7 @@ using EntityFramework.Toolkit;
 using static NUnit.Framework.Assert;
 using AgeRanger.DataContracts.Repositories;
 using AgeRanger.DIManager;
+using System.Threading;
 
 namespace AgeRanger.Repositories.UnitTest
 {
@@ -31,22 +32,23 @@ namespace AgeRanger.Repositories.UnitTest
         [OneTimeSetUp]
         public void SetUp()
         {
-            iocProvider = new AutofacProvider();
-            container = iocProvider
-                .Build($@"{ AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.reader.json",
+            iocProvider = new AutofacProvider($@"{ AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.reader.json",
                             $@"{AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.writer.json");
-            agRepo = container.Resolve<IAgeGroupReaderRepositoryContract>();
-            pRepo = container.Resolve<IPersonReaderRepositoryContract>();
+            iocProvider.Build();
+            agRepo = iocProvider.GetContainer().Resolve<IAgeGroupReaderRepositoryContract>();
+            pRepo = iocProvider.GetContainer().Resolve<IPersonReaderRepositoryContract>();
 
-            agWRepo = container.Resolve<IAgeGroupWriterRepositoryContract>();
-            pWRepo = container.Resolve<IPersonWriterRepositoryContract>();
-
+            agWRepo = iocProvider.GetContainer().Resolve<IAgeGroupWriterRepositoryContract>();
+            pWRepo = iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>();
+            Thread.Sleep(2000);
         }
 
         [Test]
-        public void Get_AgeGroup_All()
+        [TestCase(12)]
+        public void Get_AgeGroup_All(int range)
         {
             var allAgeGroup = agRepo.Query();
+            AreEqual(allAgeGroup.Count(), range);
         }
 
         [Test]
@@ -78,26 +80,52 @@ namespace AgeRanger.Repositories.UnitTest
 
 
         [Test]
-        public async Task Insert_Person()
+        [TestCase("11111", "22222", 50)]
+        public void Insert_Person(string firstName, string lastName, int age)
         {
-            var expect = new Person { FirstName = "A", LastName = "B", Age = 3 };
-            pWRepo.Create(new Person { FirstName = "A", LastName = "B", Age = 3 });
-            await pWRepo.CommitAsync();
+            var expect = new Person { FirstName = firstName, LastName = lastName, Age = age };
+            pWRepo.Create(expect);
+            pWRepo.Commit();
         }
 
         [Test]
-        public async Task Update_Person()
+        [TestCase(1, "11111", "22222", 50)]
+        public void Update_Person(int id, string firstName, string lastName, int age)
         {
-            var expect = new Person { Id = 15, FirstName = "AA", LastName = "BB", Age = 4 };
+            pWRepo.Dispose();
+            pWRepo = iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>();
+            for (int i = 0; i < 1; i++)
+            {
+                Thread.Sleep(1000);
+                pWRepo.Create(new Person { FirstName = "A", LastName = "B", Age = 3 });
+                pWRepo.Commit();
+            }
+            pWRepo.Dispose();
+            pWRepo = iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>();
+            var expect = new Person { Id = id, FirstName = firstName, LastName = lastName, Age = age };
             pWRepo.Update(expect);
-            await pWRepo.CommitAsync();
+            pWRepo.Commit();
         }
 
         [Test]
-        public async Task Delete_Person()
+        [TestCase(1)]
+        public void Delete_Person(int id)
         {
-            pWRepo.Delete(1);
-            await pWRepo.CommitAsync();
+            for (int i = 0; i < 1; i++)
+            {
+                pWRepo.Create(new Person { FirstName = "A", LastName = "B", Age = 3 });
+                pWRepo.Commit();
+            }
+            pWRepo.Dispose();
+            pWRepo = iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>();
+            pWRepo.Delete(id);
+            pWRepo.Commit();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            pWRepo.Delete(null);
         }
 
 

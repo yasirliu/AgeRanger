@@ -40,9 +40,14 @@ namespace AgeRanger.Repositories
             _set.Add(entity);
         }
 
-        public virtual void Delete(int Id)
+        public virtual void Delete(int? Id)
         {
-            var delete = new TEntity() { Id = Id };
+            if (Id == null)
+            {
+                _context.Database.ExecuteSqlCommand($"delete from {typeof(TEntity).Name}");
+                return;
+            }
+            var delete = new TEntity() { Id = Id.Value };
             _context.Entry<TEntity>(_set.Attach(delete)).State = EntityState.Deleted;
         }
 
