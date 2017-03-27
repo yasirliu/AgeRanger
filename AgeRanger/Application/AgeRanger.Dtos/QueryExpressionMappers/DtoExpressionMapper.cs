@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using LinqDynamic = System.Linq.Dynamic;
 
 namespace AgeRanger.Dtos.QueryExpressionMappers
 {
@@ -71,10 +72,20 @@ namespace AgeRanger.Dtos.QueryExpressionMappers
             }
         }
 
-
-        public static Expression<Func<T, TResult>> Convert<T, TResult>(string jsonString)
+        /// <summary>
+        /// Convert string format of Linq.Dynamic to expression
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="stringFilter"></param>
+        /// <returns></returns>
+        public static Expression<Func<T, TResult>> Convert<T, TResult>(string stringFilter)
         {
-            return null;
+            if (stringFilter == null)
+            {
+                return null;
+            }
+            return LinqDynamic.DynamicExpression.ParseLambda<T, TResult>(stringFilter);
         }
     }
 }

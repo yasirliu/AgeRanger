@@ -20,8 +20,8 @@ namespace AgeRanger.Application.Interfaces
         /// <param name="includeProperties">included related entities</param>
         /// <returns></returns>
         Task<IEnumerable<TDto>> Query(
-            Expression<Func<TDto, bool>> filter = null,
-            Func<IQueryable<TDto>, IQueryable<TDto>> orderBy = null,
+            string filter = null,
+            string orderBy = null,
             int? pageIndex = null,
             int? pageCount = null,
             params string[] includeProperties);

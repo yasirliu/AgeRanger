@@ -52,7 +52,7 @@ namespace AgeRanger.Application.UnitTest
                 var person = new CreateNewPersonCommand() { FirstName = "Adam", LastName = "Liu", Age = new Random().Next(range) };
                 iocProvider.GetContainer().Resolve<IPersonCommandHandler>().Handle(person);
             }
-            var result = await handler.Query(r => r.Age < 2);
+            var result = await handler.Query("Age < 2");
             IsTrue(result.Count() > 0);
             AreEqual(result.FirstOrDefault().Group.Description, "Toddler");
         }
@@ -66,7 +66,7 @@ namespace AgeRanger.Application.UnitTest
                 var person = new CreateNewPersonCommand() { FirstName = "Adam", LastName = "Liu", Age = new Random().Next(range) };
                 iocProvider.GetContainer().Resolve<IPersonCommandHandler>().Handle(person);
             }
-            var result = await handler.Query(r => r.Age >= 4999);
+            var result = await handler.Query("Age >= 4999");
             IsTrue(result.Count() > 0);
             AreEqual(result.FirstOrDefault().Group.Description, "Kauri tree");
         }

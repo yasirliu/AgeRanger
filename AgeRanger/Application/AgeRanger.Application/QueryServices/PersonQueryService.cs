@@ -53,13 +53,14 @@ namespace AgeRanger.Application.QueryServices
         }
 
         public async Task<IEnumerable<PersonAgeGroupDto>> Query(
-            Expression<Func<PersonAgeGroupDto, bool>> filter = null,
-            Func<IQueryable<PersonAgeGroupDto>, IQueryable<PersonAgeGroupDto>> orderBy = null,
+            string filter = null,
+            string orderBy = null,
             int? pageIndex = default(int?),
             int? pageCount = default(int?),
             params string[] includeProperties)
         {
-            var personFilter = DtoExpressionMapper.Convert<PersonAgeGroupDto, Person, bool>(filter);
+            var expressionFilter = DtoExpressionMapper.Convert<PersonAgeGroupDto, bool>(filter);
+            var personFilter = DtoExpressionMapper.Convert<PersonAgeGroupDto, Person, bool>(expressionFilter);
             var persons = await _personRepo.Query(personFilter, null, pageIndex, pageCount, includeProperties).ToListAsync();
 
             var personGroup = from person in persons
@@ -79,7 +80,7 @@ namespace AgeRanger.Application.QueryServices
 
         public async Task<PersonAgeGroupDto> GetById(int Id)
         {
-            return await this.Query(r => r.Id == Id).ContinueWith((list)=> {
+            return await this.Query($"Id = {Id}").ContinueWith((list)=> {
                 return list.Result.FirstOrDefault();
             });
         }

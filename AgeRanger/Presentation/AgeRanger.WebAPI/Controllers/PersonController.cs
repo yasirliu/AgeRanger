@@ -1,10 +1,17 @@
-﻿using System;
+﻿using AgeRanger.DIManager;
+using AgeRanger.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Autofac;
+using AgeRanger.Application.Contracts;
+using System.Threading.Tasks;
+using AgeRanger.Domain.ServiceBus.Interfaces;
+using AgeRanger.Command.PersonCommand;
 
 namespace AgeRanger.WebAPI.Controllers
 {
@@ -13,28 +20,48 @@ namespace AgeRanger.WebAPI.Controllers
     {
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<string> GetPersons()
+        public async Task<IEnumerable<PersonAgeGroupDto>> GetPersons(
+            string filter = null,
+            string orderBy = null,
+            int? pageIndex = null,
+            int? pageCount = null)
         {
-            return new string[] { "value1", "value2" };
+            using (var service = AutofacProvider.Container.Resolve<IPersonQueryServiceContract>())
+            {
+                var result = await service.Query(filter, orderBy, pageIndex, pageCount);
+                return result;
+            }
         }
 
         // GET api/<controller>/5
         [HttpGet]
-        public string GetUser(int id)
+        public async Task<PersonAgeGroupDto> GetPerson(int Id)
         {
-            return "value";
+            using (var service = AutofacProvider.Container.Resolve<IPersonQueryServiceContract>())
+            {
+                var result = await service.GetById(Id);
+                return result;
+            }
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void CreateUser([FromBody]string value)
+        public async Task CreatePerson(CreateNewPersonCommand command)
         {
+            using (var service = AutofacProvider.Container.Resolve<IPersonCommandServiceContract>())
+            {
+                await service.ApplyAsync(command);
+            }
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public void EditUser(int id, [FromBody]string value)
+        public async Task EditPerson(ModifyExistingPersonCommand command)
         {
+            using (var service = AutofacProvider.Container.Resolve<IPersonCommandServiceContract>())
+            {
+                await service.ApplyAsync(command);
+            }
         }
 
     }

@@ -23,6 +23,7 @@ namespace AgeRanger.DIManager
         private string[] _configFiles;
 
         private IContainer _container;
+        public static IContainer Container;
 
         public AutofacProvider(params string[] configFiles)
         {
@@ -72,6 +73,7 @@ namespace AgeRanger.DIManager
             {
                 _build(_configFiles);
                 _container = _builder.Build();
+                AutofacProvider.Container = _container;
             }
         }
 
@@ -89,7 +91,6 @@ namespace AgeRanger.DIManager
             }
             return _container;
         }
-
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
