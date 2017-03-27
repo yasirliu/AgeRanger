@@ -16,7 +16,7 @@ using AgeRanger.Application.CommandServices;
 
 namespace AgeRanger.DIManager
 {
-    public class AutofacProvider : IDIProvider<IContainer>
+    public class AutofacProvider : IDIProvider<ContainerBuilder, IContainer>
     {
         private ConfigurationBuilder _config;
         private ContainerBuilder _builder;
@@ -37,7 +37,7 @@ namespace AgeRanger.DIManager
         /// </summary>
         /// <param name="configFiles"></param>
         /// <returns></returns>
-        public virtual void ConfigureDI(params string[] configFiles)
+        private void _configureDI(params string[] configFiles)
         {
             //Autofac setup
             foreach (var file in configFiles)
@@ -46,28 +46,14 @@ namespace AgeRanger.DIManager
                 var module = new ConfigurationModule(_config.Build());
                 _builder.RegisterModule(module);
             }
-
-            //Interceptor only can be configured by code
-            //PersonCommandHandler dependents object that registered in config file
-            _builder.RegisterType<PersonCommandHandler>()
-                .As<IPersonCommandHandler>()
-                .EnableInterfaceInterceptors();
-
-            //Application services
-            _builder.RegisterType<PersonQueryService>()
-                .As<IPersonQueryServiceContract>()
-                .EnableInterfaceInterceptors();
-            _builder.RegisterType<PersonCommandService>()
-                .As<IPersonCommandServiceContract>()
-                .EnableInterfaceInterceptors();
         }
 
-        public virtual void ConfigureInterceptor()
+        public virtual void PreBuild(Action<ContainerBuilder> builderDelegate)
         {
-            _builder.Register(c => new CommandPropertyValidator());
+            builderDelegate?.Invoke(_builder);
         }
 
-        public void Build()
+        public virtual void Build()
         {
             if (this._container == null)
             {
@@ -77,10 +63,14 @@ namespace AgeRanger.DIManager
             }
         }
 
+        public virtual void AfterBuild(Action<IContainer> containerDelegate)
+        {
+            containerDelegate?.Invoke(_container);
+        }
+
         private void _build(params string[] configFiles)
         {
-            ConfigureDI(configFiles);
-            ConfigureInterceptor();
+            _configureDI(configFiles);
         }
 
         public IContainer GetContainer()

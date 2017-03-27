@@ -18,6 +18,16 @@ namespace AgeRanger.WebAPI.Controllers
     [EnableCors("*", "*", "*")]
     public class PersonController : ApiController
     {
+        private IPersonQueryServiceContract _queryService;
+        private IPersonCommandServiceContract _commandService;
+
+        public PersonController(IPersonQueryServiceContract queryService,
+            IPersonCommandServiceContract commandService)
+        {
+            _queryService = queryService;
+            _commandService = commandService;
+        }
+
         // GET api/<controller>
         [HttpGet]
         public async Task<IEnumerable<PersonAgeGroupDto>> GetPersons(
@@ -26,42 +36,30 @@ namespace AgeRanger.WebAPI.Controllers
             int? pageIndex = null,
             int? pageCount = null)
         {
-            using (var service = AutofacProvider.Container.Resolve<IPersonQueryServiceContract>())
-            {
-                var result = await service.Query(filter, orderBy, pageIndex, pageCount);
-                return result;
-            }
+            var result = await _queryService.Query(filter, orderBy, pageIndex, pageCount);
+            return result;
         }
 
         // GET api/<controller>/5
         [HttpGet]
         public async Task<PersonAgeGroupDto> GetPerson(int Id)
         {
-            using (var service = AutofacProvider.Container.Resolve<IPersonQueryServiceContract>())
-            {
-                var result = await service.GetById(Id);
-                return result;
-            }
+            var result = await _queryService.GetById(Id);
+            return result;
         }
 
         // POST api/<controller>
         [HttpPost]
         public async Task CreatePerson(CreateNewPersonCommand command)
         {
-            using (var service = AutofacProvider.Container.Resolve<IPersonCommandServiceContract>())
-            {
-                await service.ApplyAsync(command);
-            }
+            await _commandService.ApplyAsync(command);
         }
 
         // PUT api/<controller>/5
         [HttpPut]
         public async Task EditPerson(ModifyExistingPersonCommand command)
         {
-            using (var service = AutofacProvider.Container.Resolve<IPersonCommandServiceContract>())
-            {
-                await service.ApplyAsync(command);
-            }
+            await _commandService.ApplyAsync(command);
         }
 
     }

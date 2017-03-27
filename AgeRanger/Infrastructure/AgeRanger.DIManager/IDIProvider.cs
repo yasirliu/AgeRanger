@@ -10,9 +10,11 @@ namespace AgeRanger.DIManager
     /// IoC provider interface
     /// </summary>
     /// <typeparam name="TContainer">the type of IoC container</typeparam>
-    public interface IDIProvider<out TContainer> : IDisposable
+    public interface IDIProvider<TBuilder, TContainer> : IDisposable where TBuilder : class
     {
+        void PreBuild(Action<TBuilder> builderDelegate);
         void Build();
+        void AfterBuild(Action<TContainer> containerDelegate);
         TContainer GetContainer();
     }
 }
