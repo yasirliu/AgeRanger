@@ -44,14 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandler\CommandHandlerBase.cs" />
+    <Compile Include="CommandHandler\CommandHandler.cs" />
     <Compile Include="CommandHandler\CommnadAggregate.cs" />
+    <Compile Include="EventBus\EventBus.cs" />
     <Compile Include="EventHandler\ExceptionEvent.cs" />
+    <Compile Include="EventHandler\GenericEventHandler.cs" />
     <Compile Include="EventHandler\VersionedEvent.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\ICommandHandler.cs" />
     <Compile Include="Interfaces\IEvent.cs" />
+    <Compile Include="Interfaces\IEventHandler.cs" />
     <Compile Include="Interfaces\IOperator.cs" />
+    <Compile Include="Operator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +71,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

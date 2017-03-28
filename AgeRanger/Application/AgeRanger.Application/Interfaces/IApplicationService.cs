@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.Application.Interfaces
 {
-    public interface IApplicationService : IDisposable
+    public interface IApplicationService
     {
     }
 }

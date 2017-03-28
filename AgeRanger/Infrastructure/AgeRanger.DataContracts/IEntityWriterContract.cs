@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.DataContracts
 {
-    public interface IEntityWriterContract<TEntity> : IDisposable
+    public interface IEntityWriterContract<TEntity>
     {
         void Delete(int? Id);
         void Create(TEntity entity);

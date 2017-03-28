@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.Domain.ServiceBus.EventHandler
 {
-    public abstract class ExceptionEvent : Exception, IEvent
+    public abstract class ExceptionEvent : IEvent
     {
-        public ExceptionEvent(string errorMessage) : base(errorMessage)
-        { }
+        public ExceptionEvent(string message)
+        {
+            ErrorMessage = message;
+        }
 
         public Guid EventId
         {
@@ -26,6 +28,21 @@ namespace AgeRanger.Domain.ServiceBus.EventHandler
             {
                 return $"{this.GetType().Name}";
             }
+        }
+
+        public string ErrorMessage {
+            get;
+            set;
+        }
+
+        public string ErrorStack
+        {
+            get; set;
+        }
+
+        public override string ToString()
+        {
+            return $"{EventId}|{ErrCode}|{ErrorMessage}|{ErrorStack}";
         }
     }
 }

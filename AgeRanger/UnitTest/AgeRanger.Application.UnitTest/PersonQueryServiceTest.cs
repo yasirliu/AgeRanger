@@ -18,14 +18,15 @@ namespace AgeRanger.Application.UnitTest
     [TestFixture]
     public class PersonQueryServiceTest
     {
-        private IDIProvider<IContainer> iocProvider;
+        private IDIProvider<ContainerBuilder, IContainer> iocProvider;
         private IPersonQueryServiceContract handler;
 
         [OneTimeSetUp]
         public void SetUp()
         {
             iocProvider = new AutofacProvider($@"{ AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.reader.json",
-                            $@"{AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.writer.json");
+                            $@"{AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.writer.json",
+                            $@"{AppDomain.CurrentDomain.BaseDirectory}moduleconfig\autofac.modules.json");
             iocProvider.Build();
             handler = iocProvider.GetContainer().Resolve<IPersonQueryServiceContract>();
         }

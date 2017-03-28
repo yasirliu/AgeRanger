@@ -1,10 +1,10 @@
-﻿using AgeRanger.Domain.ServiceBus.EventHandler;
+﻿using AgeRanger.Domain.ServiceBus;
+using AgeRanger.Domain.ServiceBus.EventHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AgeRanger.Domain.ValueObjects;
 
 namespace AgeRanger.Event.PersonEvent
 {

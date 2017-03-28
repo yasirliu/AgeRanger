@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.DataContracts
 {
-    public interface IEntityReaderContract<TEntity> : IDisposable
+    public interface IEntityReaderContract<TEntity>
     {
         /// <summary>
         /// Get entities

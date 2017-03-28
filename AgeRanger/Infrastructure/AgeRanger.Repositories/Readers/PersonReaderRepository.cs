@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.Repositories.Readers
 {
-    public sealed class PersonReaderRepository : ReaderRepositoryBase<Person>, IPersonReaderRepositoryContract
+    public sealed class PersonReaderRepository : ReaderRepository<Person>, IPersonReaderRepositoryContract
     {
         public PersonReaderRepository(IAgeRangerReaderDbContextContract context) : base(context) { }
     }

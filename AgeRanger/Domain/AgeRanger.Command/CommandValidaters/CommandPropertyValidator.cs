@@ -9,6 +9,7 @@ using AgeRanger.Event.PersonEvent;
 using AgeRanger.Command.Contracts;
 using AgeRanger.Command.PersonCommand;
 using AgeRanger.Domain.ServiceBus.Interfaces;
+using AgeRanger.Domain.ServiceBus.EventBus;
 
 namespace AgeRanger.Command.CommandValidaters
 {
@@ -34,11 +35,13 @@ namespace AgeRanger.Command.CommandValidaters
                         //Throw exception events;
                         if (invocation.Arguments[0].GetType() == typeof(CreateNewPersonCommand))
                         {
-                            throw new PersonNotCreatedEvent(error.ErrorMessage);
+                            //Trigger event
+                            EventBus.Instance.Trigger(new PersonNotCreatedEvent(error.ErrorMessage));
                         }
                         else if (invocation.Arguments[0].GetType() == typeof(CreateNewPersonCommand))
                         {
-                            throw new PersonNotUpdatedEvent(error.ErrorMessage);
+                            //Trigger event
+                            EventBus.Instance.Trigger(new PersonNotUpdatedEvent(error.ErrorMessage));
                         }
                     }
                 }

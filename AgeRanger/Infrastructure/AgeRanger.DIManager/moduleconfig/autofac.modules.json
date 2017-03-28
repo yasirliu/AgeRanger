@@ -1,0 +1,8 @@
+﻿{
+  "modules": [
+    {
+      "type": "AgeRanger.Event.AutofacModules.EventHandlerRegister, AgeRanger.Event"
+    }
+  ]
+
+}

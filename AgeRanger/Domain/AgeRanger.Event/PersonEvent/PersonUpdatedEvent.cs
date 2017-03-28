@@ -1,5 +1,5 @@
-﻿using AgeRanger.Domain.ServiceBus.EventHandler;
-using AgeRanger.Domain.ValueObjects;
+﻿using AgeRanger.Domain.ServiceBus;
+using AgeRanger.Domain.ServiceBus.EventHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;

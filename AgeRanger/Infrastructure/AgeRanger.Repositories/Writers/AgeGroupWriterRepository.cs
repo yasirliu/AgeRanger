@@ -10,7 +10,7 @@ using AgeRanger.DataContracts.DataBase;
 
 namespace AgeRanger.Repositories.Writers
 {
-    public sealed class AgeGroupWriterRepository : WriterRepositoryBase<AgeGroup>, IAgeGroupWriterRepositoryContract
+    public sealed class AgeGroupWriterRepository : WriterRepository<AgeGroup>, IAgeGroupWriterRepositoryContract
     {
         public AgeGroupWriterRepository(IAgeRangerWriterDbContextContract context) : base(context)
         {

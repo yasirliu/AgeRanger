@@ -26,7 +26,7 @@ namespace AgeRanger.Repositories.UnitTest
         private IPersonReaderRepositoryContract pRepo;
         private IAgeGroupWriterRepositoryContract agWRepo;
         private IPersonWriterRepositoryContract pWRepo;
-        private IDIProvider<IContainer> iocProvider;
+        private IDIProvider<ContainerBuilder, IContainer> iocProvider;
         private IContainer container;
 
         [OneTimeSetUp]

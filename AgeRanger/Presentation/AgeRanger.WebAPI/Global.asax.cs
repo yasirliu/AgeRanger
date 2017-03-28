@@ -16,6 +16,15 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AgeRanger.Command.CommandValidaters;
+using AgeRanger.ErrorHandler;
+using AL = AgeRanger.Logger;
+using AgeRanger.Domain.ServiceBus.EventHandler;
+using AgeRanger.Security.WebApiFilters;
+using AgeRanger.WebAPI.Base;
+using Microsoft.Extensions.Logging;
+using AgeRanger.Domain.ServiceBus.EventBus;
+using AgeRanger.Event;
+using AgeRanger.Event.Contracts;
 
 namespace AgeRanger.WebAPI
 {
@@ -26,7 +35,8 @@ namespace AgeRanger.WebAPI
             //Ioc configue
             var provider = new AutofacProvider(
                 $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\repoconfig\autofac.repo.reader.json",
-                $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\repoconfig\autofac.repo.writer.json");
+                $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\repoconfig\autofac.repo.writer.json",
+                $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\moduleconfig\autofac.modules.json");
 
             //add the configues out of configue files in PreBuild
             provider.PreBuild((builder) => {
@@ -52,6 +62,21 @@ namespace AgeRanger.WebAPI
 
                 // Register the Autofac filter provider.
                 builder.RegisterWebApiFilterProvider(config);
+
+                //Register ErrorHandler
+                builder.RegisterType<NegativeErrorHandler>()
+                    .As<IErrorHandler>();
+                //Register LoggerController
+                builder.RegisterType<LoggerFactory>()
+                    .As<ILoggerFactory>();
+                builder.RegisterType<AL.LoggerController<ExceptionEvent>>()
+                    .As<AL.ILoggerController<ExceptionEvent>>();
+                builder.RegisterType<AL.LoggerController<VersionedEvent>>()
+                    .As<AL.ILoggerController<VersionedEvent>>();
+                //Register ActionFilters
+                builder.RegisterType<ExceptionFilter>()
+                    .AsWebApiExceptionFilterFor<ApiControllerExtension>();
+
             });
 
             provider.Build();
@@ -64,6 +89,10 @@ namespace AgeRanger.WebAPI
             
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            //Subscribe UnKnowErrorEvent
+            EventBus.Instance.Subscribe<UnKnownErrorEvent>(
+                provider.GetContainer().Resolve<INegativeEventsHandler>());
         }
     }
 }

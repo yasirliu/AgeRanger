@@ -93,6 +93,10 @@
       <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Json.1.1.1\lib\net451\Microsoft.Extensions.Configuration.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.1.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.FileProviders.Abstractions.1.1.0\lib\netstandard1.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
       <Private>True</Private>
@@ -105,6 +109,14 @@
       <HintPath>..\..\packages\Microsoft.Extensions.FileSystemGlobbing.1.1.0\lib\net45\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Primitives.1.1.0\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -115,6 +127,14 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.Extensions.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.Extensions.Logging.1.0.0-rtm-beta4\lib\net451\NLog.Extensions.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SQLite.CodeFirst, Version=1.3.0.17, Culture=neutral, PublicKeyToken=eb96ba0a78d831a7, processorArchitecture=MSIL">
@@ -243,6 +263,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Base\ApiControllerExtension.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -305,9 +326,21 @@
       <Project>{c49f5fc3-cd5f-4be5-8359-b075a6a1e050}</Project>
       <Name>AgeRanger.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Domain\AgeRanger.Event\AgeRanger.Event.csproj">
+      <Project>{692DD621-FCC5-4E69-B29F-1145E21E967A}</Project>
+      <Name>AgeRanger.Event</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\AgeRanger.DIManager\AgeRanger.DIManager.csproj">
       <Project>{940FC873-E355-41C0-A59B-4C827893FB74}</Project>
       <Name>AgeRanger.DIManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\AgeRanger.ErrorHandler\AgeRanger.ErrorHandler.csproj">
+      <Project>{3F56D088-38B0-438C-9FD2-8C4F80F809B4}</Project>
+      <Name>AgeRanger.ErrorHandler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\AgeRanger.Logger\AgeRanger.Logger.csproj">
+      <Project>{4610025E-2100-4F2A-A0B8-0BD599CE8401}</Project>
+      <Name>AgeRanger.Logger</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\AgeRanger.Repositories\AgeRanger.Repositories.csproj">
       <Project>{838e8f0f-0ec3-4096-b6d2-614359814ad3}</Project>

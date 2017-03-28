@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AgeRanger.Domain.ValueObjects;
 
 namespace AgeRanger.Domain.ServiceBus.EventHandler
 {
@@ -16,6 +15,12 @@ namespace AgeRanger.Domain.ServiceBus.EventHandler
         } = Guid.NewGuid();
 
         public byte[] EventVersion { get; set; }
+
         public abstract Operator Operator { get; }
+
+        public override string ToString()
+        {
+            return $"{EventId}|{Encoding.UTF8.GetString(EventVersion)}";
+        }
     }
 }

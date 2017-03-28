@@ -12,11 +12,12 @@ using AgeRanger.Application.Contracts;
 using System.Threading.Tasks;
 using AgeRanger.Domain.ServiceBus.Interfaces;
 using AgeRanger.Command.PersonCommand;
+using AgeRanger.WebAPI.Base;
 
 namespace AgeRanger.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
-    public class PersonController : ApiController
+    public class PersonController : ApiControllerExtension
     {
         private IPersonQueryServiceContract _queryService;
         private IPersonCommandServiceContract _commandService;
@@ -30,36 +31,38 @@ namespace AgeRanger.WebAPI.Controllers
 
         // GET api/<controller>
         [HttpGet]
-        public async Task<IEnumerable<PersonAgeGroupDto>> GetPersons(
+        public async Task<IHttpActionResult> GetPersons(
             string filter = null,
             string orderBy = null,
             int? pageIndex = null,
             int? pageCount = null)
         {
             var result = await _queryService.Query(filter, orderBy, pageIndex, pageCount);
-            return result;
+            return Ok(result);
         }
 
         // GET api/<controller>/5
         [HttpGet]
-        public async Task<PersonAgeGroupDto> GetPerson(int Id)
+        public async Task<IHttpActionResult> GetPerson(int Id)
         {
             var result = await _queryService.GetById(Id);
-            return result;
+            return Ok(result);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public async Task CreatePerson(CreateNewPersonCommand command)
+        public async Task<IHttpActionResult> CreatePerson(CreateNewPersonCommand command)
         {
             await _commandService.ApplyAsync(command);
+            return Ok();
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public async Task EditPerson(ModifyExistingPersonCommand command)
+        public async Task<IHttpActionResult> EditPerson(ModifyExistingPersonCommand command)
         {
             await _commandService.ApplyAsync(command);
+            return Ok();
         }
 
     }

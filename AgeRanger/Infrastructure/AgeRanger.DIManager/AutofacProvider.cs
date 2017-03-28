@@ -6,13 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AgeRanger.Command.PersonCommand;
 using Autofac.Extras.DynamicProxy;
-using AgeRanger.Command.Contracts;
-using AgeRanger.Command.CommandValidaters;
-using AgeRanger.Application.QueryServices;
-using AgeRanger.Application.Contracts;
-using AgeRanger.Application.CommandServices;
+
 
 namespace AgeRanger.DIManager
 {
