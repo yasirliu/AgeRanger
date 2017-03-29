@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.ErrorHandler
 {
-    public interface IErrorHandler
+    public interface IErrorHandler<TEvent, TException> 
+        where TEvent : IEvent
+        where TException : Exception
     {
         /// <summary>
         /// Deal with exceptions threw by server not application
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="log"></param>
-        void Handle(Exception ex);
+        void Handle(TException ex);
+        Type EventType { get; set; }
     }
 }

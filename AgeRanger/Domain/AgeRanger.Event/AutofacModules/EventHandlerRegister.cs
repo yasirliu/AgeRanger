@@ -16,6 +16,9 @@ namespace AgeRanger.Event.AutofacModules
             builder.RegisterType<NegativeEventsHandler>()
                 .As<INegativeEventsHandler>();
 
+            builder.RegisterType<UnKnownEventsHandler>()
+                .As<IUnKnownEventsHandler>();
+
             builder.RegisterType<AuditVersionedEventHandler>()
                 .As<IAuditVersionedEventHandler>();
         }

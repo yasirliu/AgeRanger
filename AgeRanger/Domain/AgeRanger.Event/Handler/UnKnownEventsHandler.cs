@@ -11,31 +11,31 @@ using AgeRanger.Event.Exceptions;
 
 namespace AgeRanger.Event.Handler
 {
-    public class NegativeEventsHandler : GenericEventHandler<ExceptionEvent>, INegativeEventsHandler
+    public class UnKnownEventsHandler : GenericEventHandler<UnKnownErrorEvent>, IUnKnownEventsHandler
     {
-        private ILoggerController<ExceptionEvent> _controller;
-        public NegativeEventsHandler(ILoggerController<ExceptionEvent> controller)
+        private ILoggerController<UnKnownErrorEvent> _controller;
+        public UnKnownEventsHandler(ILoggerController<UnKnownErrorEvent> controller)
         {
             _controller = controller;
         }
 
-        public override void Handle(ExceptionEvent @event)
+        public override void Handle(UnKnownErrorEvent @event)
         {
             //log
-            _controller.Logger.LogError(@event.ToString());
-
-            var ex = new NegativeErrorException();
+            _controller.Logger.LogCritical(@event.ToString());
+            var ex = new UnKnownErrorException();
             ex.Data.Add("Id", @event.EventId);
             ex.Data.Add("Code", @event.ErrCode);
             throw ex;
         }
 
-        public override async Task HandleAsync(ExceptionEvent @event)
+        public override async Task HandleAsync(UnKnownErrorEvent @event)
         {
             //log
             await Task.Factory.StartNew(() => {
-                _controller.Logger.LogError(@event.ToString());
-                var ex = new NegativeErrorException();
+                //log
+                _controller.Logger.LogCritical(@event.ToString());
+                var ex = new UnKnownErrorException();
                 ex.Data.Add("Id", @event.EventId);
                 ex.Data.Add("Code", @event.ErrCode);
                 throw ex;

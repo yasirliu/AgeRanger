@@ -65,24 +65,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgeRanger.Application.UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgeRanger.Logger", "Infrastructure\AgeRanger.Logger\AgeRanger.Logger.csproj", "{4610025E-2100-4F2A-A0B8-0BD599CE8401}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependences", "Dependences", "{8E8591EC-B8A1-4715-B543-706989599313}"
-	ProjectSection(SolutionItems) = preProject
-		Tools\Dependences\readme.txt = Tools\Dependences\readme.txt
-	EndProjectSection
-EndProject
-Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "sqlite-netFx46-setup-x64-2015-1.0.104.0", "..\..\sqlite-netFx46-setup-x64-2015-1.0.104.0.exe", "{8126A7D1-6AEA-4F63-AECE-E6D1FC512E5A}"
-	ProjectSection(DebuggerProjectSystem) = preProject
-		PortSupplier = 00000000-0000-0000-0000-000000000000
-		Executable = C:\Users\adaml\Documents\MyProjects\sqlite-netFx46-setup-x64-2015-1.0.104.0.exe
-		RemoteMachine = LAPTOP-LOJ63LPA
-		StartingDirectory = C:\Users\adaml\Documents\MyProjects
-		Environment = Default
-		LaunchingEngine = 00000000-0000-0000-0000-000000000000
-		UseLegacyDebugEngines = No
-		LaunchSQLEngine = No
-		AttachLaunchAction = No
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -251,10 +233,6 @@ Global
 		{4610025E-2100-4F2A-A0B8-0BD599CE8401}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4610025E-2100-4F2A-A0B8-0BD599CE8401}.Release|x86.ActiveCfg = Release|Any CPU
 		{4610025E-2100-4F2A-A0B8-0BD599CE8401}.Release|x86.Build.0 = Release|Any CPU
-		{8126A7D1-6AEA-4F63-AECE-E6D1FC512E5A}.Debug|Any CPU.ActiveCfg = Release|x86
-		{8126A7D1-6AEA-4F63-AECE-E6D1FC512E5A}.Debug|x86.ActiveCfg = Release|x86
-		{8126A7D1-6AEA-4F63-AECE-E6D1FC512E5A}.Release|Any CPU.ActiveCfg = Release|x86
-		{8126A7D1-6AEA-4F63-AECE-E6D1FC512E5A}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,7 +263,5 @@ Global
 		{E6B09EB5-D6EC-4E00-B2FC-7A46210ABB7E} = {13167FFF-A4B4-4D41-A98B-4720B26599F2}
 		{237CF820-104D-4AEF-A08C-ABEC6B252702} = {5739CDBF-048D-4C83-B57E-2E4B14D97168}
 		{4610025E-2100-4F2A-A0B8-0BD599CE8401} = {D2F0F12F-B04E-4DA5-B9A6-3F5F9A9E9170}
-		{8E8591EC-B8A1-4715-B543-706989599313} = {CD8D8CFE-AE04-4482-8475-687A83DC4579}
-		{8126A7D1-6AEA-4F63-AECE-E6D1FC512E5A} = {8E8591EC-B8A1-4715-B543-706989599313}
 	EndGlobalSection
 EndGlobal

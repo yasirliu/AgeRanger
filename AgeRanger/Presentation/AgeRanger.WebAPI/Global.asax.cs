@@ -25,6 +25,11 @@ using Microsoft.Extensions.Logging;
 using AgeRanger.Domain.ServiceBus.EventBus;
 using AgeRanger.Event;
 using AgeRanger.Event.Contracts;
+using AgeRanger.ErrorHandler.Contracts;
+using AgeRanger.Domain.ServiceBus.Interfaces;
+using AgeRanger.ErrorHandler.WebApiFilters;
+using System.Runtime.ExceptionServices;
+using AgeRanger.Event.Exceptions;
 
 namespace AgeRanger.WebAPI
 {
@@ -32,6 +37,14 @@ namespace AgeRanger.WebAPI
     {
         protected void Application_Start()
         {
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+            
+            //Manually set the path of "SQLite.Interop.dll" which is a unmanagable dll
+            int wsize = IntPtr.Size;
+            string libdir = (wsize == 4) ? "x86" : "x64";
+            string appPath = System.IO.Path.GetDirectoryName($@"{AppDomain.CurrentDomain.BaseDirectory}\bin\");
+            SetDllDirectory(System.IO.Path.Combine(appPath, libdir));
+
             //Ioc configue
             var provider = new AutofacProvider(
                 $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\repoconfig\autofac.repo.reader.json",
@@ -64,18 +77,30 @@ namespace AgeRanger.WebAPI
                 builder.RegisterWebApiFilterProvider(config);
 
                 //Register ErrorHandler
+                builder.RegisterType<UnKnownErrorHandler>()
+                    .As<IUnKnownErrorHandler>();
                 builder.RegisterType<NegativeErrorHandler>()
-                    .As<IErrorHandler>();
+                    .As<INegativeErrorHandler>();
+
                 //Register LoggerController
                 builder.RegisterType<LoggerFactory>()
                     .As<ILoggerFactory>();
-                builder.RegisterType<AL.LoggerController<ExceptionEvent>>()
-                    .As<AL.ILoggerController<ExceptionEvent>>();
                 builder.RegisterType<AL.LoggerController<VersionedEvent>>()
                     .As<AL.ILoggerController<VersionedEvent>>();
+                builder.RegisterType<AL.LoggerController<ExceptionEvent>>()
+                    .As<AL.ILoggerController<ExceptionEvent>>();
+                builder.RegisterType<AL.LoggerController<UnKnownErrorEvent>>()
+                    .As<AL.ILoggerController<UnKnownErrorEvent>>();
+                builder.RegisterType<AL.LoggerController<FirstChanceExceptionEventArgs>>()
+                    .As<AL.ILoggerController<FirstChanceExceptionEventArgs>>();
+
                 //Register ActionFilters
-                builder.RegisterType<ExceptionFilter>()
-                    .AsWebApiExceptionFilterFor<ApiControllerExtension>();
+                builder.RegisterType<NegativeErrorExceptionFilter>()
+                    .AsWebApiExceptionFilterFor<ApiControllerExtension>()
+                    .InstancePerRequest();
+                builder.RegisterType<UnKnownErrorExceptionFilter>()
+                    .AsWebApiExceptionFilterFor<ApiControllerExtension>()
+                    .InstancePerRequest();
 
             });
 
@@ -91,8 +116,20 @@ namespace AgeRanger.WebAPI
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             //Subscribe UnKnowErrorEvent
-            EventBus.Instance.Subscribe<UnKnownErrorEvent>(
-                provider.GetContainer().Resolve<INegativeEventsHandler>());
+            EventBus.Instance.Subscribe(
+                provider.GetContainer().Resolve<IUnKnownEventsHandler>());
         }
+
+        private void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
+        {
+            if (!(e.Exception is UnKnownErrorException) && !(e.Exception is NegativeErrorException))
+            {
+                //Do something here to monitor all hidden exceptions which are not handled appropriately.
+            }
+        }
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode, SetLastError = true)]
+        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        static extern bool SetDllDirectory(string lpPathName);
     }
 }

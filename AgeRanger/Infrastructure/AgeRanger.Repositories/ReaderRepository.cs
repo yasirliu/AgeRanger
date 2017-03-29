@@ -21,11 +21,11 @@ namespace AgeRanger.Repositories
     {
         public ReaderRepository(IDbContextContract context):base(context)
         {
-            //if (!_context.Database.Exists())
-            //{
-            //    //Fix don't create new DataBase in SQLite code first 
-            //    this.Query();
-            //}
+            if (!_context.Database.Exists())
+            {
+                //Fix don't create new DataBase in SQLite code first 
+                this.Query();
+            }
         }
 
         public virtual async Task<TEntity> GetById(int Id)
