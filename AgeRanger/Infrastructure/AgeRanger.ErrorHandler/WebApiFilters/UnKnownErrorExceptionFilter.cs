@@ -36,9 +36,10 @@ namespace AgeRanger.Security.WebApiFilters
             }
             return Task.Run(() => _handler.Handle(actionExecutedContext.Exception)).ContinueWith((task)=> {
                 //error messages are stored in Exception.Data not Exception.Message
+                var une = task.Exception.InnerException as UnKnownErrorException;
                 actionExecutedContext.Response =
-                    actionExecutedContext.Request.CreateResponse<IDictionary>
-                            (HttpStatusCode.InternalServerError, task.Exception.InnerException.Data);
+                    actionExecutedContext.Request.CreateResponse
+                            (HttpStatusCode.InternalServerError, une.GetExceptionInfo());
             });
         }
     }

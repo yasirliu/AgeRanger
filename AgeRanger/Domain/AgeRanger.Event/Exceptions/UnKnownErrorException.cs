@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AgeRanger.Event.Exceptions
 {
-    public class UnKnownErrorException: Exception
+    public class UnKnownErrorException : EventErrorException
     {
+        public UnKnownErrorException(string Id, string Code) : base(Id, Code)
+        {
+        }
     }
 }
