@@ -66,8 +66,12 @@
     <Compile Include="AutofacModules\EventHandlerRegister.cs" />
     <Compile Include="Contracts\IAuditVersionedEventHandler.cs" />
     <Compile Include="Contracts\INegativeEventsHandler.cs" />
+    <Compile Include="Contracts\IUnKnownEventsHandler.cs" />
+    <Compile Include="Exceptions\NegativeErrorException.cs" />
+    <Compile Include="Exceptions\UnKnownErrorException.cs" />
     <Compile Include="Handler\AuditVersionedEventHandler.cs" />
     <Compile Include="Handler\NegativeEventsHandler.cs" />
+    <Compile Include="Handler\UnKnownEventsHandler.cs" />
     <Compile Include="PersonEvent\PersonCreatedEvent.cs" />
     <Compile Include="PersonEvent\PersonNotCreatedEvent.cs" />
     <Compile Include="PersonEvent\PersonNotUpdatedEvent.cs" />

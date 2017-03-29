@@ -9,6 +9,6 @@ namespace AgeRanger.Logger
 {
     public interface ILoggerController<out TCategory>
     {
-         ILogger<TCategory> Logger { get; }
+         ILogger Logger { get; }
     }
 }

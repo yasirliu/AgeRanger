@@ -46,7 +46,7 @@ namespace AgeRanger.Command.UnitTest
 
 
                 //Register ErrorHandler
-                builder.RegisterType<NegativeErrorHandler>()
+                builder.RegisterType<UnKnownErrorHandler>()
                     .As<IErrorHandler>();
                 //Register LoggerController
                 builder.RegisterType<LoggerFactory>()

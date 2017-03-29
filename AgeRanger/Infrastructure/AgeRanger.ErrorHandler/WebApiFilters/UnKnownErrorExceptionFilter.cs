@@ -12,13 +12,17 @@ using AgeRanger.Domain.ServiceBus.Interfaces;
 using System.Net.Http;
 using System.Web.Http;
 using AgeRanger.Event;
+using System.Net;
+using System.Collections;
+using AgeRanger.ErrorHandler.Contracts;
+using AgeRanger.Event.Exceptions;
 
 namespace AgeRanger.Security.WebApiFilters
 {
-    public class ExceptionFilter : IAutofacExceptionFilter
+    public class UnKnownErrorExceptionFilter : IAutofacExceptionFilter
     {
-        private IErrorHandler _handler;
-        public ExceptionFilter(IErrorHandler handler)
+        private IUnKnownErrorHandler _handler;
+        public UnKnownErrorExceptionFilter(IUnKnownErrorHandler handler)
         {
             _handler = handler;
         }
@@ -26,15 +30,15 @@ namespace AgeRanger.Security.WebApiFilters
         public Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, 
             CancellationToken cancellationToken)
         {
+            if (actionExecutedContext.Exception is NegativeErrorException)
+            {
+                return Task.FromResult(0);
+            }
             return Task.Run(() => _handler.Handle(actionExecutedContext.Exception)).ContinueWith((task)=> {
-                if (task.Exception.InnerException.Source == nameof(UnKnownErrorEvent))
-                {
-                    actionExecutedContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
-                }
-                else
-                {
-                    actionExecutedContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
-                }
+                //error messages are stored in Exception.Data not Exception.Message
+                actionExecutedContext.Response =
+                    actionExecutedContext.Request.CreateResponse<IDictionary>
+                            (HttpStatusCode.InternalServerError, task.Exception.InnerException.Data);
             });
         }
     }

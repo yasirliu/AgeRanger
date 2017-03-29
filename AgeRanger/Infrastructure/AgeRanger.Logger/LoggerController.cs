@@ -21,10 +21,10 @@ namespace AgeRanger.Logger
             _factory = factory;
             factory.AddNLog();
             //add more providers... 
-            Logger = factory.CreateLogger<TCategory>();
+            Logger = factory.CreateLogger(typeof(TCategory).Name);
         }
 
-        public ILogger<TCategory> Logger
+        public ILogger Logger
         {
             get;
         }
