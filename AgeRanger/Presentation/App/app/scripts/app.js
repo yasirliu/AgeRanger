@@ -1,5 +1,5 @@
 /*jshint unused: vars */
-define(['angular', 'controllers/main', 'controllers/about']/*deps*/, function (angular, MainCtrl, AboutCtrl)/*invoke*/ {
+define(['angular', 'controllers/main', 'controllers/person'] /*deps*/ , function (angular, MainCtrl, PersonCtrl) /*invoke*/ {
   'use strict';
 
   /**
@@ -11,23 +11,22 @@ define(['angular', 'controllers/main', 'controllers/about']/*deps*/, function (a
    * Main module of the application.
    */
   return angular
-    .module('ageRangerApp', ['ageRangerApp.controllers.MainCtrl',
-'ageRangerApp.controllers.AboutCtrl',
-/*angJSDeps*/ngCookies,ngAria,ngMessages,ngResource,ngSanitize,ngRoute,ngAnimate,ngTouch])
-    .config(function ($routeProvider) {
+    .module('ageRangerApp', ['ngRoute', 'ngResource', 'ageRangerApp.controllers.MainCtrl', 'ageRangerApp.controllers.PersonCtrl'])
+    .config(['$routeProvider', '$resourceProvider', '$locationProvider', function ($routeProvider, $resourceProvider, $locationProvider) {
       $routeProvider
         .when('/', {
           templateUrl: 'views/main.html',
-          controller: 'MainCtrl',
-          controllerAs: 'main'
+          controller: 'MainCtrl'
         })
-        .when('/about', {
-          templateUrl: 'views/about.html',
-          controller: 'AboutCtrl',
-          controllerAs: 'about'
+        .when('/person', {
+          templateUrl: 'views/person.html',
+          controller: 'PersonCtrl'
         })
         .otherwise({
           redirectTo: '/'
         });
-    });
+      // use the HTML5 History API
+      //$locationProvider.html5Mode(true);
+      $resourceProvider.defaults.stripTrailingSlashes = false;
+    }]);
 });

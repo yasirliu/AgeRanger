@@ -48,6 +48,7 @@ namespace AgeRanger.Application.QueryServices
                                   Age = person.Age,
                                   FirstName = person.FirstName,
                                   LastName = person.LastName,
+                                  RowVersion = person.RowVersion,
                                   Group = _ageGroupRepo.Query(
                                       ag => person.Age >= (ag.MinAge ?? 0) && person.Age < (ag.MaxAge ?? int.MaxValue),
                                   null, pageIndex, pageCount, includeProperties).FirstOrDefault()
