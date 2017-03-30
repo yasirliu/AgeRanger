@@ -1,9 +1,12 @@
 ﻿using AgeRanger.Command.CommandValidaters;
 using AgeRanger.Command.Contracts;
 using AgeRanger.Command.PersonCommand;
+using AgeRanger.DataContracts.Repositories;
 using AgeRanger.DIManager;
 using AgeRanger.Domain.ServiceBus.EventHandler;
 using AgeRanger.ErrorHandler;
+using AgeRanger.ErrorHandler.Contracts;
+using AgeRanger.Event;
 using AgeRanger.Event.PersonEvent;
 using AgeRanger.Logger;
 using Autofac;
@@ -47,22 +50,33 @@ namespace AgeRanger.Command.UnitTest
 
                 //Register ErrorHandler
                 builder.RegisterType<UnKnownErrorHandler>()
-                    .As<IErrorHandler>();
+                    .As<IUnKnownErrorHandler>();
+                builder.RegisterType<NegativeErrorHandler>()
+                    .As<INegativeErrorHandler>();
+
                 //Register LoggerController
                 builder.RegisterType<LoggerFactory>()
                     .As<ILoggerFactory>();
-                builder.RegisterType<LoggerController<ExceptionEvent>>()
-                    .As<ILoggerController<ExceptionEvent>>();
                 builder.RegisterType<LoggerController<VersionedEvent>>()
                     .As<ILoggerController<VersionedEvent>>();
+                builder.RegisterType<LoggerController<ExceptionEvent>>()
+                    .As<ILoggerController<ExceptionEvent>>();
+                builder.RegisterType<LoggerController<UnKnownErrorEvent>>()
+                    .As<ILoggerController<UnKnownErrorEvent>>();
             });
 
             iocProvider.Build();
             handler = iocProvider.GetContainer().Resolve<IPersonCommandHandler>();
         }
 
+        [SetUp]
+        public void Init()
+        {
+            iocProvider.GetContainer().Resolve<IPersonReaderRepositoryContract>().Query();
+        }
+
         [Test]
-        public void Update_Person_Invalid_Age()
+        public void Command_Update_Person_Invalid_Age()
         {
             var person = new ModifyExistingPersonCommand() { Id = 1, FirstName = "1", LastName = "2", Age = -1 };
             var result = new List<ValidationResult>();
@@ -71,7 +85,7 @@ namespace AgeRanger.Command.UnitTest
         }
 
         [Test]
-        public void Update_Person_Invalid_FirstName()
+        public void Command_Update_Person_Invalid_FirstName()
         {
             var person = new ModifyExistingPersonCommand() { Id = 1, LastName = "2", Age = 1 };
             var result = person.Validate(new ValidationContext(person));
@@ -79,7 +93,7 @@ namespace AgeRanger.Command.UnitTest
         }
 
         [Test]
-        public void Update_Person_Invalid_Id()
+        public void Command_Update_Person_Invalid_Id()
         {
             var person = new ModifyExistingPersonCommand() { Id = 0, LastName = "2", Age = 1, FirstName="2" };
             var result = person.Validate(new ValidationContext(person));
@@ -87,26 +101,20 @@ namespace AgeRanger.Command.UnitTest
         }
 
         [Test]
-        public void Update_Person_Valid_Entity()
+        public void Command_Update_Person_Valid_Entity()
         {
-            ThrowsAsync<DbUpdateConcurrencyException>(async delegate
+            handler.Handle(new CreateNewPersonCommand()
             {
-                var person = new ModifyExistingPersonCommand() { Id = 1, FirstName = "Adam111111", LastName = "Liu11111", Age = 1000 };
-                await handler.HandleAsync(person);
+                FirstName = "Test",
+                LastName = "Test",
+                Age = 10
             });
-            
-        }
 
-        [Test]
-        public void Update_Person_InValid_Entity()
-        {
-            //ThrowsAsync<PersonNotCreatedEvent>(async delegate
-            //{
-            //    var person = new CreateNewPersonCommand() { Age = 100 };
-            //    await handler.HandleAsync(person);
-            //});
-        }
+            handler = iocProvider.GetContainer().Resolve<IPersonCommandHandler>();
 
+            var person = new ModifyExistingPersonCommand() { Id = 1, FirstName = "Adam111111", LastName = "Liu11111", Age = 1000 };
+            handler.Handle(person);
+        }
 
         [OneTimeTearDown]
         public void TearDown()

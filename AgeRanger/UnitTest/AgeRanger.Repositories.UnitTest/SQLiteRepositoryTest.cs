@@ -45,33 +45,33 @@ namespace AgeRanger.Repositories.UnitTest
 
         [Test]
         [TestCase(12)]
-        public void Get_AgeGroup_All(int range)
+        public void Repositories_Get_AgeGroup_All(int range)
         {
             var allAgeGroup = agRepo.Query();
             AreEqual(allAgeGroup.Count(), range);
         }
 
         [Test]
-        public void Get_Person_All()
+        public void Repositories_Get_Person_All()
         {
             var allPersons = pRepo.Query();
         }
 
         [Test]
-        public void Get_Person_AgeEqual4()
+        public void Repositories_Get_Person_AgeEqual4()
         {
             var persons = pRepo.Query(person => person.Age == 4);
         }
 
         [Test]
-        public void Get_Person_AgeEqual3_OrderByIDDesceding()
+        public void Repositories_Get_Person_AgeEqual3_OrderByIDDesceding()
         {
             var persons = pRepo.Query(person => person.Age == 3,
                 person => person.OrderByDescending(p => p.Id));
         }
 
         [Test]
-        public void Get_Person_AgeEqual3_OrderByIDDesceding_Page2_PageCount5()
+        public void Repositories_Get_Person_AgeEqual3_OrderByIDDesceding_Page2_PageCount5()
         {
             var persons = pRepo.Query(person => person.Age == 3,
                 person => person.OrderByDescending(p => p.Id),
@@ -80,8 +80,8 @@ namespace AgeRanger.Repositories.UnitTest
 
 
         [Test]
-        [TestCase("11111", "22222", 50)]
-        public void Insert_Person(string firstName, string lastName, int age)
+        [TestCase("NewPerson", "NewPerson", 50)]
+        public void Repositories_Insert_Person(string firstName, string lastName, int age)
         {
             var expect = new Person { FirstName = firstName, LastName = lastName, Age = age };
             pWRepo.Create(expect);
@@ -89,10 +89,9 @@ namespace AgeRanger.Repositories.UnitTest
         }
 
         [Test]
-        [TestCase(1, "11111", "22222", 50)]
-        public void Update_Person(int id, string firstName, string lastName, int age)
+        [TestCase(1, "UpdatePerson", "UpdatePerson", 50)]
+        public void Repositories_Update_Person(int id, string firstName, string lastName, int age)
         {
-            pWRepo.Dispose();
             pWRepo = iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>();
             for (int i = 0; i < 1; i++)
             {
@@ -100,7 +99,6 @@ namespace AgeRanger.Repositories.UnitTest
                 pWRepo.Create(new Person { FirstName = "A", LastName = "B", Age = 3 });
                 pWRepo.Commit();
             }
-            pWRepo.Dispose();
             pWRepo = iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>();
             var expect = new Person { Id = id, FirstName = firstName, LastName = lastName, Age = age };
             pWRepo.Update(expect);
@@ -109,14 +107,13 @@ namespace AgeRanger.Repositories.UnitTest
 
         [Test]
         [TestCase(1)]
-        public void Delete_Person(int id)
+        public void Repositories_Delete_Person(int id)
         {
             for (int i = 0; i < 1; i++)
             {
                 pWRepo.Create(new Person { FirstName = "A", LastName = "B", Age = 3 });
                 pWRepo.Commit();
             }
-            pWRepo.Dispose();
             pWRepo = iocProvider.GetContainer().Resolve<IPersonWriterRepositoryContract>();
             pWRepo.Delete(id);
             pWRepo.Commit();

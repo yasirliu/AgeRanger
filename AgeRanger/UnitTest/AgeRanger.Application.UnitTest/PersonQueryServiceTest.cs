@@ -12,6 +12,16 @@ using System.Linq.Dynamic;
 using AgeRanger.Command.PersonCommand;
 using AgeRanger.DataContracts.Repositories;
 using static NUnit.Framework.Assert;
+using AgeRanger.Command.CommandValidaters;
+using AgeRanger.ErrorHandler;
+using AgeRanger.ErrorHandler.Contracts;
+using Microsoft.Extensions.Logging;
+using AgeRanger.Logger;
+using AgeRanger.Domain.ServiceBus.EventHandler;
+using AgeRanger.Event;
+using Autofac.Extras.DynamicProxy;
+using AgeRanger.Application.QueryServices;
+using AgeRanger.Application.CommandServices;
 
 namespace AgeRanger.Application.UnitTest
 {
@@ -27,13 +37,55 @@ namespace AgeRanger.Application.UnitTest
             iocProvider = new AutofacProvider($@"{ AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.reader.json",
                             $@"{AppDomain.CurrentDomain.BaseDirectory}repoconfig\autofac.repo.writer.json",
                             $@"{AppDomain.CurrentDomain.BaseDirectory}moduleconfig\autofac.modules.json");
+            //add the configues out of configue files in PreBuild
+            iocProvider.PreBuild((builder) => {
+
+                //Interceptor only can be configured by code
+                //PersonCommandHandler dependents object that registered in config file
+                builder.RegisterType<PersonCommandHandler>()
+                    .As<IPersonCommandHandler>()
+                    .EnableInterfaceInterceptors();
+                builder.Register(c => new CommandPropertyValidator());
+
+
+                //Application services
+                builder.RegisterType<PersonQueryService>()
+                    .As<IPersonQueryServiceContract>()
+                    .EnableInterfaceInterceptors();
+                builder.RegisterType<PersonCommandService>()
+                    .As<IPersonCommandServiceContract>()
+                    .EnableInterfaceInterceptors();
+
+
+                //Register ErrorHandler
+                builder.RegisterType<UnKnownErrorHandler>()
+                    .As<IUnKnownErrorHandler>();
+                builder.RegisterType<NegativeErrorHandler>()
+                    .As<INegativeErrorHandler>();
+
+                //Register LoggerController
+                builder.RegisterType<LoggerFactory>()
+                    .As<ILoggerFactory>();
+                builder.RegisterType<LoggerController<VersionedEvent>>()
+                    .As<ILoggerController<VersionedEvent>>();
+                builder.RegisterType<LoggerController<ExceptionEvent>>()
+                    .As<ILoggerController<ExceptionEvent>>();
+                builder.RegisterType<LoggerController<UnKnownErrorEvent>>()
+                    .As<ILoggerController<UnKnownErrorEvent>>();
+            });
+
             iocProvider.Build();
             handler = iocProvider.GetContainer().Resolve<IPersonQueryServiceContract>();
         }
 
+        [SetUp]
+        public void Init() {
+            iocProvider.GetContainer().Resolve<IPersonReaderRepositoryContract>().Query();
+        }
+
         [Test]
         [TestCase(50)]
-        public async Task Person_Query_All(int range)
+        public async Task Application_Person_Query_All(int range)
         {
             for (int i = 0; i < range; i++)
             {
@@ -46,7 +98,7 @@ namespace AgeRanger.Application.UnitTest
 
         [Test]
         [TestCase(2)]
-        public async Task Person_Query_Toddler(int range)
+        public async Task Application_Person_Query_Toddler(int range)
         {
             for (int i = 0; i < 50; i++)
             {
@@ -60,7 +112,7 @@ namespace AgeRanger.Application.UnitTest
 
         [Test]
         [TestCase(10000)]
-        public async Task Person_Query_KauriTree(int range)
+        public async Task Application_Person_Query_KauriTree(int range)
         {
             for (int i = 0; i < 50; i++)
             {
@@ -74,7 +126,7 @@ namespace AgeRanger.Application.UnitTest
 
         [Test]
         [TestCase(1)]
-        public async Task Person_Query_GetOne(int id)
+        public async Task Application_Person_Query_GetOne(int id)
         {
             for (int i = 0; i < 1; i++)
             {

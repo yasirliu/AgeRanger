@@ -6,6 +6,8 @@ using AgeRanger.DIManager;
 using AgeRanger.Domain.ServiceBus.EventBus;
 using AgeRanger.Domain.ServiceBus.EventHandler;
 using AgeRanger.ErrorHandler;
+using AgeRanger.ErrorHandler.Contracts;
+using AgeRanger.Event;
 using AgeRanger.Event.PersonEvent;
 using AgeRanger.Logger;
 using AgeRanger.Security.WebApiFilters;
@@ -52,14 +54,19 @@ namespace AgeRanger.Command.UnitTest
 
                 //Register ErrorHandler
                 builder.RegisterType<UnKnownErrorHandler>()
-                    .As<IErrorHandler>();
+                    .As<IUnKnownErrorHandler>();
+                builder.RegisterType<NegativeErrorHandler>()
+                    .As<INegativeErrorHandler>();
+
                 //Register LoggerController
                 builder.RegisterType<LoggerFactory>()
                     .As<ILoggerFactory>();
-                builder.RegisterType<LoggerController<ExceptionEvent>>()
-                    .As<ILoggerController<ExceptionEvent>>();
                 builder.RegisterType<LoggerController<VersionedEvent>>()
                     .As<ILoggerController<VersionedEvent>>();
+                builder.RegisterType<LoggerController<ExceptionEvent>>()
+                    .As<ILoggerController<ExceptionEvent>>();
+                builder.RegisterType<LoggerController<UnKnownErrorEvent>>()
+                    .As<ILoggerController<UnKnownErrorEvent>>();
             });
 
 
@@ -68,8 +75,14 @@ namespace AgeRanger.Command.UnitTest
             handler = iocProvider.GetContainer().Resolve<IPersonCommandHandler>();
         }
 
+        [SetUp]
+        public void Init()
+        {
+            iocProvider.GetContainer().Resolve<IPersonReaderRepositoryContract>().Query();
+        }
+
         [Test]
-        public void Create_Person_Invalid_Age()
+        public void Command_Create_Person_Invalid_Age()
         {
             var person = new CreateNewPersonCommand() { FirstName = "1", LastName = "2", Age = -1 };
             var result = new List<ValidationResult>();
@@ -79,7 +92,7 @@ namespace AgeRanger.Command.UnitTest
         }
 
         [Test]
-        public void Create_Person_Invalid_FirstName()
+        public void Command_Create_Person_Invalid_FirstName()
         {
             var person = new CreateNewPersonCommand() { LastName = "2", Age = 1 };
             var result = person.Validate(new ValidationContext(person));
@@ -87,20 +100,10 @@ namespace AgeRanger.Command.UnitTest
         }
 
         [Test]
-        public void Create_Person_Valid_Entity()
+        public void Command_Create_Person_Valid_Entity()
         {
             var person = new CreateNewPersonCommand() { FirstName = "Adam", LastName = "Liu", Age = 1 };
             handler.HandleAsync(person).Wait();
-        }
-
-        [Test]
-        public void Create_Person_InValid_Entity()
-        {
-            //ThrowsAsync<PersonNotCreatedEvent>(async delegate
-            //{
-            //    var person = new CreateNewPersonCommand() { Age = 100 };
-            //    await handler.HandleAsync(person);
-            //});
         }
 
         [TearDown]

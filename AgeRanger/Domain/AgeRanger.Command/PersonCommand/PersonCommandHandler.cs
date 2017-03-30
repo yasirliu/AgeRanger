@@ -56,6 +56,7 @@ namespace AgeRanger.Command.PersonCommand
         {
             var person = this.CommandMapper<ModifyExistingPersonCommand>(command);
             _repository.Update(person, person.RowVersion);
+            _repository.Commit();
             //Trigger event
             EventBus.Instance.Trigger(new PersonUpdatedEvent()
             {
@@ -68,6 +69,7 @@ namespace AgeRanger.Command.PersonCommand
         {
             var person = this.CommandMapper<CreateNewPersonCommand>(command);
             _repository.Create(person);
+            _repository.Commit();
             //Trigger event
             EventBus.Instance.Trigger(new PersonCreatedEvent()
             {
