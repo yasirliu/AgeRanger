@@ -85,7 +85,37 @@ namespace AgeRanger.Dtos.QueryExpressionMappers
             {
                 return null;
             }
-            return LinqDynamic.DynamicExpression.ParseLambda<T, TResult>(stringFilter);
+            //Transform stringFilter to the string accepted by Dynamic.Linq
+            var items = stringFilter.Split(' ');
+            List<object> values = new List<object>();
+            //for (var i = 2; i < items.Length; i = i + 4)
+            //{
+            //    var key = items[i - 2];
+            //    var type = typeof(T).GetProperty(key).PropertyType;
+            //    values.Add(System.Convert.ChangeType(items[i], type));
+            //    items[i] = $"@{(i - 2) / 4}";
+            //}
+            for (var i = 0; i < items.Length; i++)
+            {
+                if (items[i].Contains(".Contains("))
+                {
+                    var indexofLeft = items[i].IndexOf("(");
+                    var indexofRight = items[i].IndexOf(")");
+                    values.Add(items[i].Substring(indexofLeft + 1, indexofRight - indexofLeft - 1).ToString());
+                    items[i] = $"{items[i].Substring(0, indexofLeft + 1)}@{values.Count - 1}{items[i].Substring(indexofRight)}";
+                }
+                else if (i != 0 && items[i - 1].ToString() == "=")
+                {
+                    var type = typeof(T).GetProperty(items[i - 2]).PropertyType;
+                    values.Add(System.Convert.ChangeType(items[i], type));
+                    items[i] = $"@{values.Count - 1}";
+                }
+            }
+
+            var newfilter = items.Aggregate((first, second) => {
+                return $"{first} {second}";
+            });
+            return LinqDynamic.DynamicExpression.ParseLambda<T, TResult>(newfilter, values.ToArray());
         }
     }
 }

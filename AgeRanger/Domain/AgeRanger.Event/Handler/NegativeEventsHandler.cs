@@ -24,9 +24,7 @@ namespace AgeRanger.Event.Handler
             //log
             _controller.Logger.LogError(@event.ToString());
 
-            var ex = new NegativeErrorException();
-            ex.Data.Add("Id", @event.EventId);
-            ex.Data.Add("Code", @event.ErrCode);
+            var ex = new NegativeErrorException(@event.EventId.ToString(), @event.ErrCode);
             throw ex;
         }
 
@@ -35,9 +33,7 @@ namespace AgeRanger.Event.Handler
             //log
             await Task.Factory.StartNew(() => {
                 _controller.Logger.LogError(@event.ToString());
-                var ex = new NegativeErrorException();
-                ex.Data.Add("Id", @event.EventId);
-                ex.Data.Add("Code", @event.ErrCode);
+                var ex = new NegativeErrorException(@event.EventId.ToString(), @event.ErrCode);
                 throw ex;
             });
         }

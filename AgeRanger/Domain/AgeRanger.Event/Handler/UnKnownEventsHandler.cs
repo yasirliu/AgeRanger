@@ -23,9 +23,7 @@ namespace AgeRanger.Event.Handler
         {
             //log
             _controller.Logger.LogCritical(@event.ToString());
-            var ex = new UnKnownErrorException();
-            ex.Data.Add("Id", @event.EventId);
-            ex.Data.Add("Code", @event.ErrCode);
+            var ex = new UnKnownErrorException(@event.EventId.ToString(), @event.ErrCode);
             throw ex;
         }
 
@@ -35,9 +33,7 @@ namespace AgeRanger.Event.Handler
             await Task.Factory.StartNew(() => {
                 //log
                 _controller.Logger.LogCritical(@event.ToString());
-                var ex = new UnKnownErrorException();
-                ex.Data.Add("Id", @event.EventId);
-                ex.Data.Add("Code", @event.ErrCode);
+                var ex = new UnKnownErrorException(@event.EventId.ToString(), @event.ErrCode);
                 throw ex;
             });
         }

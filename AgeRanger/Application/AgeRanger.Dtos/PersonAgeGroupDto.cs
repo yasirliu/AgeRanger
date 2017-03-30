@@ -17,6 +17,8 @@ namespace AgeRanger.Dtos
 
         public int Id { get; set; }
 
+        public byte[] RowVersion { get; set; }
+
         public AgeGroup Group { get; set; }
     }
 }

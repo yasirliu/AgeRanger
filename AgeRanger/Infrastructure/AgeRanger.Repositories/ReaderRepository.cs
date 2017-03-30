@@ -53,6 +53,10 @@ namespace AgeRanger.Repositories
             {
                 query = orderBy(query);
             }
+            else
+            {
+                query = query.OrderBy(r => r.Id);
+            }
 
             if (pageIndex != null && pageCount != null)
             {

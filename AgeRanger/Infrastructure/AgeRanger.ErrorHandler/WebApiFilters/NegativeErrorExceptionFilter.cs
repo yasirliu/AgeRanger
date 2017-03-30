@@ -32,10 +32,11 @@ namespace AgeRanger.ErrorHandler.WebApiFilters
                 return Task.FromResult(0);
             }
             return Task.Run(() => {
-                _handler.Handle(actionExecutedContext.Exception as NegativeErrorException);
+                var nee = actionExecutedContext.Exception as NegativeErrorException;
+                _handler.Handle(nee);
                 actionExecutedContext.Response =
-                    actionExecutedContext.Request.CreateResponse<IDictionary>
-                            (HttpStatusCode.BadRequest, actionExecutedContext.Exception.Data);
+                    actionExecutedContext.Request.CreateResponse
+                            (HttpStatusCode.BadRequest, nee.GetExceptionInfo());
             });
         }
     }

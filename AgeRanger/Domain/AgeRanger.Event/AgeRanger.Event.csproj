@@ -67,6 +67,7 @@
     <Compile Include="Contracts\IAuditVersionedEventHandler.cs" />
     <Compile Include="Contracts\INegativeEventsHandler.cs" />
     <Compile Include="Contracts\IUnKnownEventsHandler.cs" />
+    <Compile Include="Exceptions\EventErrorException.cs" />
     <Compile Include="Exceptions\NegativeErrorException.cs" />
     <Compile Include="Exceptions\UnKnownErrorException.cs" />
     <Compile Include="Handler\AuditVersionedEventHandler.cs" />
