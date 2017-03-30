@@ -59,8 +59,9 @@ namespace AgeRanger.WebAPI.Controllers
 
         // PUT api/<controller>/5
         [HttpPut]
-        public async Task<IHttpActionResult> EditPerson(ModifyExistingPersonCommand command)
+        public async Task<IHttpActionResult> EditPerson(int Id, ModifyExistingPersonCommand command)
         {
+            command.Id = Id;
             await _commandService.ApplyAsync(command);
             return Ok();
         }

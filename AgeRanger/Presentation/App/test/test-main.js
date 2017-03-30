@@ -1,6 +1,7 @@
 var tests = [];
 for (var file in window.__karma__.files) {
   if (window.__karma__.files.hasOwnProperty(file)) {
+    console.log(file);
     // Removed "Spec" naming from files
     if (/Spec\.js$/.test(file)) {
       tests.push(file);
@@ -23,7 +24,9 @@ requirejs.config({
     'angular-route': '../../bower_components/angular-route/angular-route',
     'angular-sanitize': '../../bower_components/angular-sanitize/angular-sanitize',
     'angular-touch': '../../bower_components/angular-touch/angular-touch',
-    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
+    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
+    'angular-bootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls',
+    'angular-ui-grid': '../../bower_components/angular-ui-grid/ui-grid'
   },
 
     shim: {

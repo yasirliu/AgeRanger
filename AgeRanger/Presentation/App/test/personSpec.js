@@ -1,5 +1,5 @@
 /*jshint unused: vars */
-define(['angular', 'angular-mocks', 'app'], function(angular, mocks, app) {
+define(['angular', 'angular-mocks', 'app'], function (angular, mocks, app) {
   'use strict';
 
   describe('Controller: PersonCtrl', function () {
@@ -16,15 +16,33 @@ define(['angular', 'angular-mocks', 'app'], function(angular, mocks, app) {
       PersonCtrl = $controller('PersonCtrl', {
         $scope: scope,
         // place here mocked dependencies
-        $http: {
-
+        personService: {
+          return: {
+            query: function (params, callback) {
+              var persons = [{
+                  id: 1,
+                  firstName: "Adam",
+                  lastName: "Liu",
+                  age: 5
+                },
+                {
+                  id: 2,
+                  firstName: "Adam2",
+                  lastName: "Liu2",
+                  age: 6
+                }
+              ];
+              callback();
+              return params;
+            }
+          }
         }
       });
     }));
 
     it('should return a list of persons by calling GetPersons', function () {
       //expect(PersonCtrl.awesomeThings.length).toBe(3);
-      expect(PersonCtrl.getPersons())
+      expect(PersonCtrl.getPersons().length===2).toBe(true);
     });
   });
 });

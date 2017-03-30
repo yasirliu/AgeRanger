@@ -11,7 +11,9 @@ require.config({
     'angular-route': '../../bower_components/angular-route/angular-route',
     'angular-sanitize': '../../bower_components/angular-sanitize/angular-sanitize',
     'angular-touch': '../../bower_components/angular-touch/angular-touch',
-    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
+    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
+    'angular-bootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls',
+    'angular-ui-grid': '../../bower_components/angular-ui-grid/ui-grid'
   },
   shim: {
     angular: {
@@ -33,6 +35,9 @@ require.config({
       'angular'
     ],
     'angular-touch': [
+      'angular'
+    ],
+    'angular-bootstrap': [
       'angular'
     ],
     'angular-mocks': {
@@ -61,13 +66,14 @@ require([
   'angular-resource',
   'angular-animate',
   'angular-touch',
+  'angular-bootstrap',
   'app'
-], function(angular, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, app) {
+], function (angular, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, ngBootstrap, app) {
   'use strict';
   /* jshint ignore:start */
   var $html = angular.element(document.getElementsByTagName('html')[0]);
   /* jshint ignore:end */
-  angular.element().ready(function() {
+  angular.element().ready(function () {
     angular.resumeBootstrap([app.name]);
   });
 });

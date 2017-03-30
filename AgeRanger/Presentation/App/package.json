@@ -31,8 +31,10 @@
     "grunt-text-replace": "^0.4.0",
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^2.0.0",
+    "jasmine-core": "^2.5.2",
     "jit-grunt": "^0.9.1",
     "jshint-stylish": "^1.0.0",
+    "karma": "^1.5.0",
     "karma-jasmine": "*",
     "karma-phantomjs-launcher": "*",
     "karma-requirejs": "*",
@@ -43,5 +45,9 @@
   },
   "scripts": {
     "test": "grunt test"
+  },
+  "dependencies": {
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.5.0"
   }
 }

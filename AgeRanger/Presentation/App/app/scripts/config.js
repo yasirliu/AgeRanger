@@ -1,3 +1,4 @@
 (function () {
-  window.apiBase = 'http://localhost/AgeRangerAPI/api/'
+  'use strict';
+  window.apiBase = 'http://localhost/AgeRangerAPI/api/';
 })();

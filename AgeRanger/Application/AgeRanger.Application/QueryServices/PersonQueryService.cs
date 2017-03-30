@@ -28,7 +28,7 @@ namespace AgeRanger.Application.QueryServices
             _ageGroupRepo = ageGroupRepo;
         }
 
-        
+
 
         public async Task<IEnumerable<PersonAgeGroupDto>> Query(
             string filter = null,
@@ -51,7 +51,7 @@ namespace AgeRanger.Application.QueryServices
                                   RowVersion = person.RowVersion,
                                   Group = _ageGroupRepo.Query(
                                       ag => person.Age >= (ag.MinAge ?? 0) && person.Age < (ag.MaxAge ?? int.MaxValue),
-                                  null, pageIndex, pageCount, includeProperties).FirstOrDefault()
+                                  null, null, null, includeProperties).FirstOrDefault()
                               };
 
             return await Task.FromResult(personGroup);
@@ -59,10 +59,10 @@ namespace AgeRanger.Application.QueryServices
 
         public async Task<PersonAgeGroupDto> GetById(int Id)
         {
-            return await this.Query($"Id = {Id}").ContinueWith((list)=> {
+            return await this.Query($"Id = {Id}").ContinueWith((list) =>
+            {
                 return list.Result.FirstOrDefault();
             });
         }
-
     }
 }

@@ -8,7 +8,7 @@ module.exports = function(config) {
 
   config.set({
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
     // base path, that will be used to resolve files and exclude
     basePath: '',
@@ -17,16 +17,14 @@ module.exports = function(config) {
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     // requirejs added automatically
     frameworks: [
-      &#34;jasmine&#34;,
-      &#34;requirejs&#34;
+      'jasmine',
+      'requirejs'
     ],
 
     // list of files / patterns to load in the browser
     files: [
-        
-    ,
         // http://karma-runner.github.io/0.10/plus/requirejs.html
-        '/test/test-main.js'
+        'test/test-main.js'
     ],
 
     // list of files / patterns to exclude
@@ -45,14 +43,14 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      &#34;PhantomJS&#34;
+      'PhantomJS'
     ],
 
     // Which plugins to enable
     plugins: [
-      &#34;karma-phantomjs-launcher&#34;,
-      &#34;karma-jasmine&#34;,
-      &#34;karma-requirejs&#34;
+      'karma-phantomjs-launcher',
+      'karma-jasmine',
+      'karma-requirejs'
     ],
 
     // Continuous Integration mode
