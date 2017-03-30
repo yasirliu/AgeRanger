@@ -16,6 +16,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{23F59826-6D7E-402E-83D5-DFBCD18A5F1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{D9186B01-162A-491F-9913-333723418061}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\Deploy\Service\Backup.bat = Tools\Deploy\Service\Backup.bat
+		Tools\Deploy\Service\CopyApp.bat = Tools\Deploy\Service\CopyApp.bat
+		Tools\Deploy\Service\Deploy.bat = Tools\Deploy\Service\Deploy.bat
+		Tools\Deploy\Service\Project.csproj = Tools\Deploy\Service\Project.csproj
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgeRanger.Domain", "Domain\AgeRanger.Domain\AgeRanger.Domain.csproj", "{C49F5FC3-CD5F-4BE5-8359-B075A6A1E050}"
 EndProject
@@ -64,6 +70,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgeRanger.Application.UnitTest", "UnitTest\AgeRanger.Application.UnitTest\AgeRanger.Application.UnitTest.csproj", "{237CF820-104D-4AEF-A08C-ABEC6B252702}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgeRanger.Logger", "Infrastructure\AgeRanger.Logger\AgeRanger.Logger.csproj", "{4610025E-2100-4F2A-A0B8-0BD599CE8401}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{A911475E-B9F7-474D-9809-1D2582C812C8}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\Deploy\Service\Targets\CommonItems.targets = Tools\Deploy\Service\Targets\CommonItems.targets
+		Tools\Deploy\Service\Targets\CommonProperties.targets = Tools\Deploy\Service\Targets\CommonProperties.targets
+		Tools\Deploy\Service\Targets\InitCommonProperties.targets = Tools\Deploy\Service\Targets\InitCommonProperties.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -263,5 +276,6 @@ Global
 		{E6B09EB5-D6EC-4E00-B2FC-7A46210ABB7E} = {13167FFF-A4B4-4D41-A98B-4720B26599F2}
 		{237CF820-104D-4AEF-A08C-ABEC6B252702} = {5739CDBF-048D-4C83-B57E-2E4B14D97168}
 		{4610025E-2100-4F2A-A0B8-0BD599CE8401} = {D2F0F12F-B04E-4DA5-B9A6-3F5F9A9E9170}
+		{A911475E-B9F7-474D-9809-1D2582C812C8} = {D9186B01-162A-491F-9913-333723418061}
 	EndGlobalSection
 EndGlobal

@@ -64,7 +64,7 @@ module.exports = function (grunt) {
       server: '.tmp'
     },
 
-    
+
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
@@ -93,7 +93,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    
+
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
@@ -174,8 +174,9 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'views/{,*/}*.html',
+            'templates/**/*.html',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
           ]
         }, {
           expand: true,
@@ -229,7 +230,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html', '*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -309,7 +310,9 @@ module.exports = function (grunt) {
     postcss: {
       options: {
         processors: [
-          require('autoprefixer-core')({browsers: ['last 1 version']})
+          require('autoprefixer-core')({
+            browsers: ['last 1 version']
+          })
         ]
       },
       server: {
@@ -339,7 +342,7 @@ module.exports = function (grunt) {
         overwrite: true,
         replacements: [{
           from: /paths: {[^}]+}/,
-          to: function() {
+          to: function () {
             return require('fs').readFileSync(grunt.template.process('<%= yeoman.app %>') + '/scripts/main.js').toString().match(/paths: {[^}]+}/);
           }
         }]
@@ -440,10 +443,10 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
       },
       sass: {
-      src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
       }
     }
