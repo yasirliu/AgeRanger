@@ -20,11 +20,11 @@ You are free to use any technology and frameworks you need. However if you decid
 Good luck!
 
 
+
 ## Backend
 - Entity Framework 6 Code First and SQLite extensions
 - Autofac
-- AutoMapper
-- Microsoft.Extensions.Logging and NLog
+- AutoMapper- Microsoft.Extensions.Logging and NLog
 - NUnit
 - WebAPI 2
 - .Net Framework 4.5.2
@@ -64,8 +64,8 @@ Good luck!
 - API Help
   - WebAPI provides API help pages. "http://{Domain}/Help"
 ## Deploy
-### WebApi
-1. Locate tp {Path}\AgeRanger\Tools\Deploy\Service\ and run "nuget restore {Path}AgeRanger\AgeRanger.sln" to restore packages
+### WebApi (automatic way)
+1. Locate to {Path}\AgeRanger\Tools\Deploy\Service\ and run "nuget restore {Path}AgeRanger\AgeRanger.sln" to restore packages
 2. Install [MSDeploy](https://www.iis.net/downloads/microsoft/web-deploy)
 3. Create a new website "AgeRanger" and a empty physical folder mapping to "AgeRanger" website in IIS
 4. Open cmd under Administrator and locate to "C:\Program Files (x86)\MSBuild\14.0\Bin"
