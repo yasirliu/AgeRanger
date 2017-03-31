@@ -21,7 +21,7 @@ You are free to use any technology and frameworks you need. However if you decid
 Good luck!
 
 
-
+e
 ## Backend
 - Entity Framework 6 Code First and SQLite extensions
 - Autofac
@@ -55,7 +55,7 @@ Good luck!
 - Dependence Injection
   - Autofac
   - DI is used in every laryer, so each layer is independent even WebAPI
-  - DI is also used to inject instance of DbContext into instance of Repository. It means it is very easy to migrant to any database providers if the database provider was included in Infrasturcture
+  - DI is also used to inject instance of DbContext into instance of Repository. It means it is very easy to migrate to any database providers if the database provider was included in Infrasturcture
   - DI configurations consists of two parts. One part is in json file resgistering database providers and event handlers. The other part is in Global.asax/Application_Start resgistering others.
 - ORM
   - EntityFramework 6 Code First with SQLite extensions
