@@ -23,7 +23,8 @@ Good luck!
 
 e
 ## Backend
-- Entity Framework 6 Code First and SQLite extensions- Autofac
+- Entity Framework 6 Code First and SQLite extensions
+- Autofac
 - [Dynamic Linq](https://github.com/kahanu/System.Linq.Dynamic)
 - AutoMapper
 - Microsoft.Extensions.Logging and NLog
