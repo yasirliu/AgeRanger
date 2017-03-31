@@ -81,7 +81,7 @@ e
 3. Create a new website "AgeRanger" and a empty physical folder mapping to "AgeRanger" website in IIS
 4. Open cmd under Administrator and locate to "C:\Program Files (x86)\MSBuild\14.0\Bin"
 5. Run "MSBuild {Path}\AgeRanger\Tools\Deploy\Service\Project.csproj"
-6. If successful, a new folder "AgeRanger" would be created including a folder for backup of the existing website and a folder for the undeployed package of AgeRanger
+6. If successful, a new folder "AgeRanger" would be created in C:\ including a folder for backup of the existing website and a folder for the undeployed package of AgeRanger
 7. Check the "AgeRanger" website. All of files would be there
 ### WebApp
 1. Install Nodejs
