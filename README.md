@@ -62,3 +62,18 @@ Good luck!
 - API Help
   - WebAPI provides API help pages. "domain/Help"
 ## Deploy
+### WebApi
+1. Install [MSDeploy](https://www.iis.net/downloads/microsoft/web-deploy)
+2. Create a new website "AgeRanger" and a empty physical folder mapping to "AgeRanger" website in IIS
+3. Open cmd under Administrator and locate to "C:\Program Files (x86)\MSBuild\14.0\Bin"
+4. Run "MSBuild {Path}\AgeRanger\Tools\Deploy\Service\Project.csproj"
+5. If successful, a new folder "AgeRanger" would be created including a folder for backup of the existing website and a folder for the undeployed package of AgeRanger
+6. Check the "AgeRanger" website. All of files would be there
+### WebApp
+1. Install Nodejs
+2. Intall npm, bower and grunt
+3. Locate to "{Path}\AgeRange\Presentation\App"
+4. Run "grunt build"
+5. Check the folder dist
+## TODO
+- Authentication & Authorization is not there.
