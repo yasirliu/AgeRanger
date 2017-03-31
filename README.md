@@ -57,8 +57,9 @@ Good luck!
 - Logger
   - Logger is only a controller to be used to register log providers on the basis of Microsoft.Extensions.Logging and NLog provider. Changing provider only need change code in LoggerController.cs or create inheritance from LoggerController and register new controller in Global.asax/Application_Start using Autofac
 - ErrorHandler
-  - ErrorHandler provides a strategy transforming uncatchced exceptions from server to event and trigger the event
-  - ErrorHandler provides global errror handling for WebAPI using ActionExceptionFilter of WebAPI and return related HttpStautsCode to client
+  - ErrorHandler provides a strategy transforming uncatchced exceptions from server to event and trigger the event, so the details of excption will not expose to client only in log files.
+  - ErrorHandler provides global error handling for WebAPI using ActionExceptionFilter of WebAPI and return related HttpStautsCode to client
+  - WebApp also has global error hander making efforts by being injected into AngularJS httpProvider
 - API Help
   - WebAPI provides API help pages. "http://{Domain}/Help"
 ## Deploy
