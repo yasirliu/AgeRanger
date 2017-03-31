@@ -65,6 +65,9 @@ Good luck!
   - ErrorHandler provides a strategy transforming uncatchced exceptions from server to event and trigger the event, so the details of excption will not expose to client only in log files.
   - ErrorHandler provides global error handling for WebAPI using ActionExceptionFilter of WebAPI and return related HttpStautsCode to client
   - WebApp also has global error hander making efforts by being injected into AngularJS httpProvider
+- DIManager
+  - DIManager provide IoC container instance by implementing IDIProvider interface
+  - If you want to change IoC container, create a new class and implement this IDIProvider doing your logic.
 - API Help
   - WebAPI provides API help pages. "http://{Domain}/Help"
 ## Deploy
