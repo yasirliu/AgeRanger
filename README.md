@@ -60,7 +60,7 @@ Good luck!
   - ErrorHandler provides a strategy transforming uncatchced exceptions from server to event and trigger the event
   - ErrorHandler provides global errror handling for WebAPI using ActionExceptionFilter of WebAPI and return related HttpStautsCode to client
 - API Help
-  - WebAPI provides API help pages. "domain/Help"
+  - WebAPI provides API help pages. "http://{Domain}/Help"
 ## Deploy
 ### WebApi
 1. Install [MSDeploy](https://www.iis.net/downloads/microsoft/web-deploy)
