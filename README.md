@@ -24,7 +24,8 @@ Good luck!
 ## Backend
 - Entity Framework 6 Code First and SQLite extensions
 - Autofac
-- AutoMapper- Microsoft.Extensions.Logging and NLog
+- AutoMapper
+- Microsoft.Extensions.Logging and NLog
 - NUnit
 - WebAPI 2
 - .Net Framework 4.5.2
