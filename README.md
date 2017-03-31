@@ -35,6 +35,7 @@ Good luck!
 ## Frontend
 - [Yeoman (AngularJS, Requirejs)](https://github.com/aaronallport/generator-angular-require)
 - Bootstrap 3.X
+- Angular Bootstrap UI
 - Grunt
 ## Design 
 - Domain Driven Design(DDD)
