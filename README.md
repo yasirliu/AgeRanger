@@ -78,5 +78,6 @@ Good luck!
 3. Locate to "{Path}\AgeRange\Presentation\App"
 4. Run "grunt build"
 5. Check the folder dist
+6. Don't forget to find file "config.js" in folder scripts and change the api base url
 ## TODO
 - Authentication & Authorization is not there.
