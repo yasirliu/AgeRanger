@@ -42,7 +42,7 @@ Good luck!
   - Domain (Commnads, Command Handlers, Events, Event Handlers, Entities & EventBus)
   - Infrasturcture (Repositories, ErrorHandler, Logger, DIManager & Database providers)
 - Contract & Interface
-  - Contract in AgeRanger is the only interface with on statement of any properties or methods and used by Autofac giving a readabel configeration
+  - Contract in AgeRanger is the only interface with on statement of any properties or methods and used by Autofac by giving a readable configuration
   - Interface in AgeRanger is the typical interface....
 - CQRS (Command/Event/EventBus)
   - Each of database providers should have 2 Dbcontext refering to write side and read side, for instance, AgeRanger.SQLite in AgeRanger, AgeRangerDbContext is for read side and AgeRangerWriterDbContext is for write side. Write side and read side are using same database in current circumstance. It can be configured in Web.config/connectionString :
