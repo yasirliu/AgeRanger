@@ -52,6 +52,9 @@ e
     <add name="AgeRangerDBWriter" connectionString="data source=|DataDirectory|\sqlite\AgeRanger.db;foreign keys=true" providerName="System.Data.SQLite" />
   </connectionStrings>
   ```
+  - CommandHandler is resposible for command handling and event registering. For instance, PersonCommnadHanlder registers PersonCreateEvent/PersonUpdatedEvent/PersonNotCreatedEvent/PersonNotUpdatedEvent and handle PersonCreateCommand/PersonUpdateCommand. The EventHandler you chose to register events is based on the business rules. In one CommandHandler, multiple Events are able to be registered with multiple EventHandlers for multiple Commands
+  - EventHanler is resposible for dealing the stuffs after Event is triggered. For instatnce, if one person is created successfully, PersonCreateEvent is triggered and the related EventHanler is executed to send a email message, log some stuffs or integrate with MSSQ etc.
+  - Application services supply two kinds of services. One is used to query, the other is used to send Command to CommandHandler. Query service is called directly to communicate with Repository. Command service is called to communicate with CommandHandler
 - Dependence Injection
   - Autofac
   - DI is used in every laryer, so each layer is independent even WebAPI
