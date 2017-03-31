@@ -50,7 +50,7 @@ Good luck!
   ```
 - Dependence Injection
   - Autofac
-  - DI is used in each laryer, so each layer is independent even WebAPI
+  - DI is used in every laryer, so each layer is independent even WebAPI
   - DI is also used to inject instance of DbContext into instance of Repository. It means it is very easy to migrant to any database providers if the database provider was included in Infrasturcture
   - DI configurations consists of two parts. One part is in json file resgistering database providers and event handlers. The other part is in Global.asax/Application_Start resgistering others.
 - ORM
