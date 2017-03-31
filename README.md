@@ -32,6 +32,7 @@ Good luck!
 ## Frontend
 - [Yeoman (AngularJS, Requirejs)](https://github.com/aaronallport/generator-angular-require)
 - Bootstrap 3.X
+- Grunt
 ## Design 
 
 - Domain Driven Design(DDD)
