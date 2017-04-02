@@ -65,7 +65,7 @@ Good luck!
 - ORM
   - EntityFramework 6 Code First with SQLite extensions
 - Logger
-  - Logger is only a controller to be used to register log providers on the basis of Microsoft.Extensions.Logging and NLog provider. Changing provider only need change code in LoggerController.cs or create inheritance from LoggerController and register new controller in Global.asax/Application_Start using Autofac
+  - Logger is only a controller to be used to register log providers on the basis of Microsoft.Extensions.Logging and NLog provider. Changing provider only need create inheritance from LoggerController or create new class implementing ILoggerController and register new controller in Global.asax/Application_Start using Autofac
 - ErrorHandler
   - ErrorHandler provides a strategy transforming uncatchced exceptions from server to event and trigger the event, so the details of excption will not expose to client only in log files.
   - ErrorHandler provides global error handling for WebAPI using ActionExceptionFilter of WebAPI and return related HttpStautsCode to client
