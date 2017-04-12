@@ -19,9 +19,9 @@ namespace AgeRanger.Application.CommandServices
         }
 
 
-        public async void Apply(CreateNewPersonCommand command)
+        public void Apply(CreateNewPersonCommand command)
         {
-            await this.ApplyAsync(command);
+            _handler.Handle(command);
         }
 
         public async Task ApplyAsync(CreateNewPersonCommand command)
@@ -29,9 +29,9 @@ namespace AgeRanger.Application.CommandServices
             await _handler.HandleAsync(command);
         }
 
-        public async void Apply(ModifyExistingPersonCommand command)
+        public void Apply(ModifyExistingPersonCommand command)
         {
-            await this.ApplyAsync(command);
+            _handler.Handle(command);
         }
 
         public async Task ApplyAsync(ModifyExistingPersonCommand command)

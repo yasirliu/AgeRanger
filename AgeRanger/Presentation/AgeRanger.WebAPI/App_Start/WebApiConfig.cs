@@ -18,6 +18,8 @@ namespace AgeRanger.WebAPI
             // Use camel case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.DateFormatHandling =
+                Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
 
             // Web API routes
             config.MapHttpAttributeRoutes();

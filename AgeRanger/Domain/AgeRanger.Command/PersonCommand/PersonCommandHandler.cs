@@ -85,16 +85,15 @@ namespace AgeRanger.Command.PersonCommand
         {
             var person = this.CommandMapper<ModifyExistingPersonCommand>(command);
             _repository.Update(person, person.RowVersion);
-            await _repository.CommitAsync().ContinueWith((task)=> {
-                //Trigger event
-                EventBus.Instance.Trigger<PersonUpdatedEvent>(new PersonUpdatedEvent()
-                {
-                    Id = command.Id,
-                    Age = command.Age,
-                    FirstName = command.FirstName,
-                    LastName = command.LastName,
-                    EventVersion = command.CommandVersion
-                });
+            await _repository.CommitAsync();
+            //Trigger event
+            EventBus.Instance.Trigger<PersonUpdatedEvent>(new PersonUpdatedEvent()
+            {
+                Id = command.Id,
+                Age = command.Age,
+                FirstName = command.FirstName,
+                LastName = command.LastName,
+                EventVersion = command.CommandVersion
             });
         }
 
@@ -102,15 +101,14 @@ namespace AgeRanger.Command.PersonCommand
         {
             var person = this.CommandMapper<CreateNewPersonCommand>(command);
             _repository.Create(person);
-            await _repository.CommitAsync().ContinueWith((task)=>{
-                //Trigger event
-                EventBus.Instance.Trigger(new PersonCreatedEvent()
-                {
-                    Age = command.Age,
-                    FirstName = command.FirstName,
-                    LastName = command.LastName,
-                    EventVersion = command.CommandVersion
-                });
+            await _repository.CommitAsync();
+            //Trigger event
+            EventBus.Instance.Trigger(new PersonCreatedEvent()
+            {
+                Age = command.Age,
+                FirstName = command.FirstName,
+                LastName = command.LastName,
+                EventVersion = command.CommandVersion
             });
         }
 

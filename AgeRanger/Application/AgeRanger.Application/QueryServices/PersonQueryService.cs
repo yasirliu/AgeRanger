@@ -59,10 +59,8 @@ namespace AgeRanger.Application.QueryServices
 
         public async Task<PersonAgeGroupDto> GetById(int Id)
         {
-            return await this.Query($"Id = {Id}").ContinueWith((list) =>
-            {
-                return list.Result.FirstOrDefault();
-            });
+            var r = await this.Query($"Id = {Id}");
+            return r.FirstOrDefault();
         }
     }
 }
